@@ -1,0 +1,68 @@
+/* ============================================================
+ * USS HUD Reduced Motion Override
+ * Source: design/ux/hud-visual-design.md section 5.5
+ * Applied when reduced-motion accessibility mode is enabled.
+ *
+ * Principle: Keep informational animations (color changes, fades).
+ * Remove decorative animations (bouncing, pulsing, overshoot).
+ * ============================================================ */
+
+.hud-root.reduced-motion {
+    /* Parent class enables all overrides below */
+}
+
+/* ---- Damage Bounce: simplified to 0.1s fade ---- */
+.hud-root.reduced-motion .damage-percent {
+    transition: color 200ms ease-in-out,
+                opacity 100ms linear;
+}
+
+.hud-root.reduced-motion .damage-percent.bounce {
+    scale: 1.0;
+}
+
+/* ---- KO: simplified to 0.2s fade-in ---- */
+.hud-root.reduced-motion .ko-notification {
+    transition: opacity 200ms ease-out;
+}
+
+.hud-root.reduced-motion .ko-notification.phase-enter {
+    scale: 1.0;
+}
+
+/* ---- Focus Pulse: disabled ---- */
+.hud-root.reduced-motion .focus-fill.pulse {
+    opacity: 1.0;
+}
+
+/* ---- Skill Equip: simplified to 0.1s fade ---- */
+.hud-root.reduced-motion .skill-slot .skill-icon {
+    transition: opacity 100ms linear;
+}
+
+.hud-root.reduced-motion .skill-slot.equip-phase1 .skill-icon {
+    scale: 1.0;
+}
+
+.hud-root.reduced-motion .skill-slot.equip-phase2 .skill-icon {
+    scale: 1.0;
+}
+
+/* ---- Direction Arrow Pulse: disabled ---- */
+.hud-root.reduced-motion .direction-arrow {
+    opacity: 1.0;
+}
+
+/* ---- Match Point Pulse: disabled ---- */
+.hud-root.reduced-motion .match-point {
+    opacity: 1.0;
+}
+
+/* ---- HUD Fade: preserved (state transition, informational) ---- */
+/* No override needed -- fades are kept as-is. */
+
+/* ---- Color Transitions: preserved (informational) ---- */
+/* No override needed. */
+
+/* ---- Interrupt Flash: preserved (key combat feedback) ---- */
+/* No override needed. */

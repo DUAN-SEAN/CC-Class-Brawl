@@ -1,0 +1,9 @@
+namespace ClassBrawl.Core
+{
+    public enum Rarity
+    {
+        Common,
+        Rare,
+        Epic
+    }
+}

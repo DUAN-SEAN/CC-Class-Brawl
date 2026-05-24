@@ -1,0 +1,90 @@
+/* ============================================================
+ * USS Main Menu Animation — Keyframes, pulse, fades
+ * Source: design/ux/main-menu-visual-design.md section 5
+ * ============================================================ */
+
+/* ---- Menu Root Fade ---- */
+.menu-root {
+    transition: opacity var(--anim-screen-fade-out) cubic-bezier(0.55, 0.085, 0.68, 0.53);
+}
+
+.menu-root.fade-in {
+    opacity: 1;
+    transition: opacity var(--anim-screen-fade-in) cubic-bezier(0.33, 1, 0.68, 1);
+}
+
+.menu-root.fade-out {
+    opacity: 0;
+}
+
+/* ---- Entrance Sequence Phases ---- */
+/* Driven by MainMenuEntranceAnimation in C# via scheduled callbacks. */
+/* The classes below provide visual states toggled by C# code.        */
+
+/* Background appears first */
+.menu-background.entrance-visible {
+    opacity: 1;
+}
+
+/* Title appears second */
+.title-container.entrance-visible {
+    opacity: 1;
+}
+
+/* Top bar buttons appear third */
+.top-bar.entrance-visible {
+    opacity: 1;
+}
+
+/* Footer appears with top bar */
+.footer.entrance-visible {
+    opacity: 1;
+}
+
+/* CTA button appears last */
+.cta-button.entrance-visible {
+    opacity: 1;
+}
+
+/* ---- CTA Pulse Border States ---- */
+/* Pulse is driven by C# schedule loop (sine wave opacity modulation). */
+/* The C# code toggles border-opacity via inline styles.                */
+
+.cta-button.pulsing {
+    /* Marker class: CTA is in pulsing mode */
+}
+
+.cta-button.pulse-stopped {
+    border-opacity: 0.7;
+}
+
+/* ---- Dialog Appear ---- */
+.dialog-panel.dialog-enter {
+    opacity: 1;
+    scale: 1.0;
+    transition: opacity var(--anim-dialog-appear) cubic-bezier(0.33, 1, 0.68, 1),
+                scale var(--anim-dialog-appear) cubic-bezier(0.33, 1, 0.68, 1);
+}
+
+.dialog-panel.dialog-exit {
+    opacity: 0;
+    scale: 0.95;
+    transition: opacity var(--anim-dialog-close) cubic-bezier(0.55, 0.085, 0.68, 0.53),
+                scale var(--anim-dialog-close) cubic-bezier(0.55, 0.085, 0.68, 0.53);
+}
+
+/* ---- Background Breathing Light ---- */
+/* Breathing light is driven by C# schedule loop. */
+/* The .breathing class marks the element as active. */
+.menu-background.breathing {
+    /* Marker class: background breathing animation is active */
+}
+
+/* ---- Element Hidden States (for entrance sequence) ---- */
+.menu-background,
+.top-bar,
+.footer,
+.cta-button,
+.title-container {
+    opacity: 0;
+}

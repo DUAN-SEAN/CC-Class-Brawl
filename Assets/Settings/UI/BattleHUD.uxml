@@ -1,0 +1,99 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements"
+         xmlns:uie="UnityEditor.UIExtensions"
+         editor-extension-mode="False">
+
+  <!-- Battle HUD Root -->
+  <ui:VisualElement name="BattleHUD" class="hud-root fade-out"
+                    style="opacity: 0;">
+
+    <!-- ============================================ -->
+    <!-- Score Area (top center)                      -->
+    <!-- ============================================ -->
+    <ui:VisualElement name="ScoreArea" class="score-area">
+      <ui:Label name="ScoreText" class="score-text" text="0 - 0" />
+      <ui:Label name="RoundText" class="round-text" text="R1/3" />
+      <ui:Label name="MatchPointIndicator" class="match-point" text="&#x25CF;" />
+    </ui:VisualElement>
+
+    <!-- ============================================ -->
+    <!-- P1 Info Area (bottom-left)                   -->
+    <!--   Order: DamagePercent -> FocusBar -> Slots  -->
+    <!-- ============================================ -->
+    <ui:VisualElement name="P1InfoArea" class="player-info p1">
+      <ui:Label name="P1DamagePercent" class="damage-percent damage-low" text="0%" />
+      <ui:VisualElement name="P1FocusBar" class="focus-bar">
+        <ui:VisualElement name="P1FocusFill" class="focus-fill" />
+        <ui:VisualElement name="P1ThresholdMarker" class="threshold-marker" />
+        <ui:Label name="P1MaxLabel" class="max-label" text="MAX" />
+      </ui:VisualElement>
+      <ui:VisualElement name="P1SkillSlots" class="skill-slots">
+        <ui:VisualElement name="P1Slot0" class="skill-slot empty">
+          <ui:VisualElement name="P1SlotIcon0" class="skill-icon" />
+          <ui:Label name="P1SlotKey0" class="key-hint" text="1" />
+        </ui:VisualElement>
+        <ui:VisualElement name="P1Slot1" class="skill-slot empty">
+          <ui:VisualElement name="P1SlotIcon1" class="skill-icon" />
+          <ui:Label name="P1SlotKey1" class="key-hint" text="2" />
+        </ui:VisualElement>
+        <ui:VisualElement name="P1Slot2" class="skill-slot empty">
+          <ui:VisualElement name="P1SlotIcon2" class="skill-icon" />
+          <ui:Label name="P1SlotKey2" class="key-hint" text="3" />
+        </ui:VisualElement>
+        <ui:VisualElement name="P1Slot3" class="skill-slot empty">
+          <ui:VisualElement name="P1SlotIcon3" class="skill-icon" />
+          <ui:Label name="P1SlotKey3" class="key-hint" text="4" />
+        </ui:VisualElement>
+      </ui:VisualElement>
+    </ui:VisualElement>
+
+    <!-- ============================================ -->
+    <!-- P2 Info Area (bottom-right, mirrored)        -->
+    <!--   Order: SkillSlots -> FocusBar -> Damage    -->
+    <!-- ============================================ -->
+    <ui:VisualElement name="P2InfoArea" class="player-info p2">
+      <ui:VisualElement name="P2SkillSlots" class="skill-slots">
+        <ui:VisualElement name="P2Slot0" class="skill-slot empty">
+          <ui:VisualElement name="P2SlotIcon0" class="skill-icon" />
+          <ui:Label name="P2SlotKey0" class="key-hint" text="1" />
+        </ui:VisualElement>
+        <ui:VisualElement name="P2Slot1" class="skill-slot empty">
+          <ui:VisualElement name="P2SlotIcon1" class="skill-icon" />
+          <ui:Label name="P2SlotKey1" class="key-hint" text="2" />
+        </ui:VisualElement>
+        <ui:VisualElement name="P2Slot2" class="skill-slot empty">
+          <ui:VisualElement name="P2SlotIcon2" class="skill-icon" />
+          <ui:Label name="P2SlotKey2" class="key-hint" text="3" />
+        </ui:VisualElement>
+        <ui:VisualElement name="P2Slot3" class="skill-slot empty">
+          <ui:VisualElement name="P2SlotIcon3" class="skill-icon" />
+          <ui:Label name="P2SlotKey3" class="key-hint" text="4" />
+        </ui:VisualElement>
+      </ui:VisualElement>
+      <ui:VisualElement name="P2FocusBar" class="focus-bar">
+        <ui:VisualElement name="P2FocusFill" class="focus-fill" />
+        <ui:VisualElement name="P2ThresholdMarker" class="threshold-marker" />
+        <ui:Label name="P2MaxLabel" class="max-label" text="MAX" />
+      </ui:VisualElement>
+      <ui:Label name="P2DamagePercent" class="damage-percent damage-low" text="0%" />
+    </ui:VisualElement>
+
+    <!-- ============================================ -->
+    <!-- KO Notification (screen center)              -->
+    <!-- ============================================ -->
+    <ui:Label name="KONotification" class="ko-notification hidden" text="KO!" />
+
+    <!-- ============================================ -->
+    <!-- Edge Warning (fullscreen overlay)            -->
+    <!-- ============================================ -->
+    <ui:VisualElement name="EdgeWarning" class="edge-warning" />
+
+    <!-- ============================================ -->
+    <!-- Direction Arrows Container                   -->
+    <!-- ============================================ -->
+    <ui:VisualElement name="DirectionArrows" class="direction-arrows">
+      <ui:VisualElement name="P1Arrow" class="direction-arrow" />
+      <ui:VisualElement name="P2Arrow" class="direction-arrow" />
+    </ui:VisualElement>
+
+  </ui:VisualElement>
+</ui:UXML>

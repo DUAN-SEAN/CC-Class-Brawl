@@ -1,0 +1,1248 @@
+# Technical Requirement ID Registry
+#
+# PURPOSE: Persistent, stable IDs for every GDD technical requirement.
+# Prevents TR-ID renumbering across /architecture-review runs, which would
+# break story references.
+#
+# RULES:
+#   - IDs are PERMANENT. Never renumber, never delete (use status: deprecated).
+#   - Add new entries only at the END of each system's list.
+#   - When a GDD requirement is reworded (same intent): update `requirement`
+#     text and add a `revised` date. The ID stays the same.
+#   - When a requirement is removed from the GDD: set status: deprecated.
+#   - When a requirement is split or replaced: set status: superseded-by with
+#     the new TR-ID(s).
+#
+# WRITTEN BY: /architecture-review (appends new entries, never overwrites)
+# READ BY:    /create-stories (embed IDs in stories)
+#             /story-done (look up current requirement text at review time)
+#             /story-readiness (validate TR-ID exists and is active)
+#
+# ID FORMAT: TR-[system-slug]-[NNN]
+#   system-slug = short slug matching the GDD system name
+#   NNN = three-digit zero-padded sequence per system, starting at 001
+#
+# STATUS VALUES: active | deprecated | superseded-by: TR-[system]-NNN
+
+version: 2
+last_updated: "2026-05-24"
+
+requirements:
+
+  # ============================================================
+  # MOV — 3C System (3c-system.md) — 52 TRs
+  # ============================================================
+  - id: TR-MOV-001
+    system: movement
+    gdd: design/gdd/3c-system.md
+    requirement: "All movement logic runs in FixedUpdate at 60Hz (Unity FixedTimestep = 1/60)"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  - id: TR-MOV-002
+    system: movement
+    gdd: design/gdd/3c-system.md
+    requirement: "Rigidbody2D.gravityScale = 0, gravity applied manually via formula"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  - id: TR-MOV-003
+    system: movement
+    gdd: design/gdd/3c-system.md
+    requirement: "dt = Time.fixedDeltaTime = 1/60, all formulas use this timestep"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  - id: TR-MOV-004
+    system: movement
+    gdd: design/gdd/3c-system.md
+    requirement: "Unity New Input System, per-player PlayerInput device mapping"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  - id: TR-MOV-005
+    system: movement
+    gdd: design/gdd/3c-system.md
+    requirement: "MVP: 2-player local, architecture reserves 4-player"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  - id: TR-MOV-006
+    system: movement
+    gdd: design/gdd/3c-system.md
+    requirement: "Directional input is analog (0.0-1.0) with Dead Zone 0.15"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  - id: TR-MOV-007
+    system: movement
+    gdd: design/gdd/3c-system.md
+    requirement: "Jump input supports press and release events (short hop control)"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  - id: TR-MOV-008
+    system: movement
+    gdd: design/gdd/3c-system.md
+    requirement: "Directional input to character response must complete within 1 frame (16.6ms)"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  - id: TR-MOV-009
+    system: movement
+    gdd: design/gdd/3c-system.md
+    requirement: "3C system frame time < 2ms (input + movement + camera combined)"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  - id: TR-MOV-010
+    system: movement
+    gdd: design/gdd/3c-system.md
+    requirement: "Walk/run threshold at analog magnitude 0.3/0.7 (animation-only, does not affect movement formula)"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  - id: TR-MOV-011
+    system: movement
+    gdd: design/gdd/3c-system.md
+    requirement: "MovementState enum: Idle, Running, Jumping, Falling, FastFalling, Dashing, AirDodging, Landing, PlatformDrop"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  - id: TR-MOV-012
+    system: movement
+    gdd: design/gdd/3c-system.md
+    requirement: "FacingDirection enum: Left=-1, Right=1"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  - id: TR-MOV-013
+    system: movement
+    gdd: design/gdd/3c-system.md
+    requirement: "IMovementController is the sole interface for downstream systems to interact with 3C"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  - id: TR-MOV-014
+    system: movement
+    gdd: design/gdd/3c-system.md
+    requirement: "Ground movement uses continuous acceleration model with stick magnitude affecting acceleration"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  - id: TR-MOV-015
+    system: movement
+    gdd: design/gdd/3c-system.md
+    requirement: "Ground friction uses framerate-independent decay (pow(1-Friction, dt*60)) with StopThreshold"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  - id: TR-MOV-016
+    system: movement
+    gdd: design/gdd/3c-system.md
+    requirement: "Direction switch is instant, no turn-lock frames"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  - id: TR-MOV-017
+    system: movement
+    gdd: design/gdd/3c-system.md
+    requirement: "Jump velocity from physics formula: sqrt(2*Gravity*JumpHeight), with AirJumpForceRatio and ShortHopHeightRatio"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  - id: TR-MOV-018
+    system: movement
+    gdd: design/gdd/3c-system.md
+    requirement: "Short hop is velocity-set mode: release within ShortHopWindow sets Vy to ShortHopVelocity"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  - id: TR-MOV-019
+    system: movement
+    gdd: design/gdd/3c-system.md
+    requirement: "Fast fall: hold down increases gravity multiplier, sets Vy to min(current, -FastFallInitiationSpeed)"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  - id: TR-MOV-020
+    system: movement
+    gdd: design/gdd/3c-system.md
+    requirement: "Air control uses independent air acceleration and max air speed (less than ground)"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  - id: TR-MOV-021
+    system: movement
+    gdd: design/gdd/3c-system.md
+    requirement: "Double jump has usage limit (MaxAirJumps=1), resets on landing"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  - id: TR-MOV-022
+    system: movement
+    gdd: design/gdd/3c-system.md
+    requirement: "Dash has 3 phases (Startup/Active/Recovery), movement only during Active frames at constant speed"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  - id: TR-MOV-023
+    system: movement
+    gdd: design/gdd/3c-system.md
+    requirement: "First 2 frames of dash Active phase have invincibility"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  - id: TR-MOV-024
+    system: movement
+    gdd: design/gdd/3c-system.md
+    requirement: "Air dodge preserves air inertia, knockback momentum halved during dodge"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  - id: TR-MOV-025
+    system: movement
+    gdd: design/gdd/3c-system.md
+    requirement: "Dash cooldown (DashCooldownFrames), landing does not reset cooldown"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  - id: TR-MOV-026
+    system: movement
+    gdd: design/gdd/3c-system.md
+    requirement: "Platform drop requires down+jump combo within PlatformDropInputWindow=3 frames"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  - id: TR-MOV-027
+    system: movement
+    gdd: design/gdd/3c-system.md
+    requirement: "Landing lag (LandingLagFrames=3), no jump during lag"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  - id: TR-MOV-028
+    system: movement
+    gdd: design/gdd/3c-system.md
+    requirement: "Pass-through platforms only collide from top, characters can jump through from below"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  - id: TR-MOV-029
+    system: movement
+    gdd: design/gdd/3c-system.md
+    requirement: "Coyote time (CoyoteTimeFrames=4), can ground-jump after leaving platform edge"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  - id: TR-MOV-030
+    system: movement
+    gdd: design/gdd/3c-system.md
+    requirement: "Jump input buffer (JumpInputBufferFrames=3), jump pressed before landing is buffered"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  - id: TR-MOV-031
+    system: movement
+    gdd: design/gdd/3c-system.md
+    requirement: "Camera tracks bounding box of all active player positions, centered on box center"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  - id: TR-MOV-032
+    system: movement
+    gdd: design/gdd/3c-system.md
+    requirement: "Camera dynamically adjusts orthographic size based on bounding box, with smooth Lerp"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  - id: TR-MOV-033
+    system: movement
+    gdd: design/gdd/3c-system.md
+    requirement: "Camera size constrained between MinCamSize and MaxCamSize"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  - id: TR-MOV-034
+    system: movement
+    gdd: design/gdd/3c-system.md
+    requirement: "Camera cannot show area beyond arena boundaries"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  - id: TR-MOV-035
+    system: movement
+    gdd: design/gdd/3c-system.md
+    requirement: "Knockback ignores MaxGroundSpeed/MaxAirSpeed limits, knockback has highest speed authority"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  - id: TR-MOV-036
+    system: movement
+    gdd: design/gdd/3c-system.md
+    requirement: "Simultaneous opposite directions: last pressed wins; equal press uses previous direction"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  - id: TR-MOV-037
+    system: movement
+    gdd: design/gdd/3c-system.md
+    requirement: "Input device disconnect: character keeps current state, shows disconnect notification"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  - id: TR-MOV-038
+    system: movement
+    gdd: design/gdd/3c-system.md
+    requirement: "Walking off platform edge (not jumping) does not consume air jump count"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  - id: TR-MOV-039
+    system: movement
+    gdd: design/gdd/3c-system.md
+    requirement: "All players at same position: OrthoSize = MinCamSize"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  - id: TR-MOV-040
+    system: movement
+    gdd: design/gdd/3c-system.md
+    requirement: "Players beyond MaxCamSize range: camera stays at MaxCamSize, off-screen players get direction arrows"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  - id: TR-MOV-041
+    system: movement
+    gdd: design/gdd/3c-system.md
+    requirement: "Single player remaining: camera zooms to MinCamSize, follows remaining player"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  - id: TR-MOV-042
+    system: movement
+    gdd: design/gdd/3c-system.md
+    requirement: "Knocked into two walls simultaneously: vertical walls stop horizontal speed, vertical speed preserved"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  - id: TR-MOV-043
+    system: movement
+    gdd: design/gdd/3c-system.md
+    requirement: "Unit system: 1 Unity unit = 64 pixels (PPU=64), character height = 1 unit"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  - id: TR-MOV-044
+    system: movement
+    gdd: design/gdd/3c-system.md
+    requirement: "Physics architecture recorded in ADR-0001 (docs/architecture/adr-0001-physics-timestep.md)"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  - id: TR-MOV-045
+    system: movement
+    gdd: design/gdd/3c-system.md
+    requirement: "31 tuning knobs all require external data configuration (not hardcoded)"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  - id: TR-MOV-046
+    system: movement
+    gdd: design/gdd/3c-system.md
+    requirement: "Knob interaction: MoveAcceleration/MaxGroundSpeed affect time-to-max; Gravity/JumpHeight affect jump feel; DashDistance/DashActiveFrames determine DashSpeed"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  - id: TR-MOV-047
+    system: movement
+    gdd: design/gdd/3c-system.md
+    requirement: "Class system provides base movement params via data injection"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  - id: TR-MOV-048
+    system: movement
+    gdd: design/gdd/3c-system.md
+    requirement: "Attack system controls movement freeze via FreezeMovement(true/false)"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  - id: TR-MOV-049
+    system: movement
+    gdd: design/gdd/3c-system.md
+    requirement: "Skill attachment system modifies speed via ModifySpeed(multiplier)"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  - id: TR-MOV-050
+    system: movement
+    gdd: design/gdd/3c-system.md
+    requirement: "Visual feedback: run tilt, jump squash-stretch, landing compression, fast-fall trail, dash motion blur"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  - id: TR-MOV-051
+    system: movement
+    gdd: design/gdd/3c-system.md
+    requirement: "Audio events: OnJump, OnLand, OnDashStart, OnPlatformDrop"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  - id: TR-MOV-052
+    system: movement
+    gdd: design/gdd/3c-system.md
+    requirement: "WalkSpeedRatio=0.4 (range 0.2-0.6), animation-only knob"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  # ============================================================
+  # CBT — Combat State Machine (combat-state-machine.md) — Key TRs
+  # ============================================================
+  - id: TR-CBT-001
+    system: combat
+    gdd: design/gdd/combat-state-machine.md
+    requirement: "Combat FSM and 3C movement FSM are two independent FSMs running in parallel on the same character"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  - id: TR-CBT-002
+    system: combat
+    gdd: design/gdd/combat-state-machine.md
+    requirement: "CombatState enum {Idle, Attacking, HitStun, Knockback}, AttackPhase enum {Startup, Active, Recovery}"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  - id: TR-CBT-003
+    system: combat
+    gdd: design/gdd/combat-state-machine.md
+    requirement: "Control authority: Idle=3C full control, Attacking=freeze 3C, HitStun=freeze 3C, Knockback=delegate SetVelocity"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  - id: TR-CBT-004
+    system: combat
+    gdd: design/gdd/combat-state-machine.md
+    requirement: "Attack input enters input buffer (InputBufferFrames=8), checked every frame for state acceptance"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  - id: TR-CBT-005
+    system: combat
+    gdd: design/gdd/combat-state-machine.md
+    requirement: "Input interpretation depends on 3C MovementState and IsGrounded() to determine attack type"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  - id: TR-CBT-006
+    system: combat
+    gdd: design/gdd/combat-state-machine.md
+    requirement: "Attack input priority: special > air > ground (skill system determines mapping)"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  - id: TR-CBT-007
+    system: combat
+    gdd: design/gdd/combat-state-machine.md
+    requirement: "3-phase attack frame structure (Startup/Active/Recovery), frame 0 = Startup frame 1"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  - id: TR-CBT-008
+    system: combat
+    gdd: design/gdd/combat-state-machine.md
+    requirement: "Forced cancel: HitStun interrupts any combat state, attack immediately terminated, hitbox closed"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  - id: TR-CBT-009
+    system: combat
+    gdd: design/gdd/combat-state-machine.md
+    requirement: "Configurable cancel table (data-driven): each attack has CancelTable in Recovery phase"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  - id: TR-CBT-010
+    system: combat
+    gdd: design/gdd/combat-state-machine.md
+    requirement: "Cancel priority when multiple conditions met: skill attack > base attack > dodge/jump"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  - id: TR-CBT-011
+    system: combat
+    gdd: design/gdd/combat-state-machine.md
+    requirement: "ICombatStateProvider supports dynamic skill state registration without modifying core FSM code"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  - id: TR-CBT-012
+    system: combat
+    gdd: design/gdd/combat-state-machine.md
+    requirement: "HitStun duration = HitStunFrames from attack data, returns to CombatIdle after"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  - id: TR-CBT-013
+    system: combat
+    gdd: design/gdd/combat-state-machine.md
+    requirement: "Knockback has unopérable hitstun period (KnockbackHitstunFrames), then character can act"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  - id: TR-CBT-014
+    system: combat
+    gdd: design/gdd/combat-state-machine.md
+    requirement: "Knockback vs HitStun threshold = KnockbackThreshold=9.0, strictly greater (equals = HitStun)"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  - id: TR-CBT-015
+    system: combat
+    gdd: design/gdd/combat-state-machine.md
+    requirement: "KnockbackHitstunFrames formula: Floor(BaseKnockbackHitstun + KnockbackHitstunGrowth * Magnitude), clamped to Cap"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  - id: TR-CBT-016
+    system: combat
+    gdd: design/gdd/combat-state-machine.md
+    requirement: "Buffer validity: BufferAge = CurrentFrame - InputRecordedFrame; valid if 0 <= age <= InputBufferFrames"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  - id: TR-CBT-017
+    system: combat
+    gdd: design/gdd/combat-state-machine.md
+    requirement: "Cancel window: CancelStartFrame = StartupFrames + ActiveFrames, CancelEndFrame = CancelStartFrame + CancelWindowFrames - 1"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  - id: TR-CBT-018
+    system: combat
+    gdd: design/gdd/combat-state-machine.md
+    requirement: "Attack phase progression: based on CurrentAttackFrame cumulative comparison with StartupFrames/ActiveFrames/RecoveryFrames"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  - id: TR-CBT-019
+    system: combat
+    gdd: design/gdd/combat-state-machine.md
+    requirement: "State priority (same-frame multiple triggers): hit > attack progression > cancel trigger > natural end"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  - id: TR-CBT-020
+    system: combat
+    gdd: design/gdd/combat-state-machine.md
+    requirement: "HitStun during HitStun: reset timer with new HitStunFrames (replace, not stack); upgrade to Knockback if threshold met"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  - id: TR-CBT-021
+    system: combat
+    gdd: design/gdd/combat-state-machine.md
+    requirement: "HitStunFrames=0 forces minimum 1 frame"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  - id: TR-CBT-022
+    system: combat
+    gdd: design/gdd/combat-state-machine.md
+    requirement: "Knockback recovery hit again: new knockback speed overwrites current (no stacking)"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  - id: TR-CBT-023
+    system: combat
+    gdd: design/gdd/combat-state-machine.md
+    requirement: "Knockback landing: state ends, CombatState->Idle, 3C enters Landing (3 frames)"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  - id: TR-CBT-024
+    system: combat
+    gdd: design/gdd/combat-state-machine.md
+    requirement: "KnockbackMagnitude exactly equals Threshold: enters HitStun (strict greater for Knockback)"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  - id: TR-CBT-025
+    system: combat
+    gdd: design/gdd/combat-state-machine.md
+    requirement: "Knockback out of Blast Zone: match manager handles KO, FSM stops all updates"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  - id: TR-CBT-026
+    system: combat
+    gdd: design/gdd/combat-state-machine.md
+    requirement: "Same-frame mutual hit: collision system decides priority (attack ID or player index), each processes independently"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  - id: TR-CBT-027
+    system: combat
+    gdd: design/gdd/combat-state-machine.md
+    requirement: "Attack frame data sum=0: ignore that attack input (data integrity)"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  - id: TR-CBT-028
+    system: combat
+    gdd: design/gdd/combat-state-machine.md
+    requirement: "Multiple buffered inputs same frame: process by cancel priority, only highest accepted"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  - id: TR-CBT-029
+    system: combat
+    gdd: design/gdd/combat-state-machine.md
+    requirement: "InputBufferFrames=0: no buffer (expert mode reserved), technically allowed"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  - id: TR-CBT-030
+    system: combat
+    gdd: design/gdd/combat-state-machine.md
+    requirement: "CancelWindowFrames > RecoveryFrames: clamped to RecoveryFrames"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  - id: TR-CBT-031
+    system: combat
+    gdd: design/gdd/combat-state-machine.md
+    requirement: "Cancel target conditions not met: input stays in buffer until window expires"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  - id: TR-CBT-032
+    system: combat
+    gdd: design/gdd/combat-state-machine.md
+    requirement: "Skill state interrupted by HitStun: skill system needs interrupted callback"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  - id: TR-CBT-033
+    system: combat
+    gdd: design/gdd/combat-state-machine.md
+    requirement: "Duplicate state name registration: first wins, subsequent ignored with warning"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  - id: TR-CBT-034
+    system: combat
+    gdd: design/gdd/combat-state-machine.md
+    requirement: "Registration without frame data: rejected"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  - id: TR-CBT-035
+    system: combat
+    gdd: design/gdd/combat-state-machine.md
+    requirement: "Query interface: GetCurrentState(), GetCurrentAttackPhase(), GetCurrentAttackFrame(), CanAcceptInput()"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  - id: TR-CBT-036
+    system: combat
+    gdd: design/gdd/combat-state-machine.md
+    requirement: "Events: OnCombatStateChanged(from, to), OnAttackPhaseChanged(phase)"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  - id: TR-CBT-037
+    system: combat
+    gdd: design/gdd/combat-state-machine.md
+    requirement: "Combat FSM frame time < 0.5ms"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  - id: TR-CBT-038
+    system: combat
+    gdd: design/gdd/combat-state-machine.md
+    requirement: "KnockbackThreshold calibrated to 9.0 by knockback-launch GDD"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  - id: TR-CBT-039
+    system: combat
+    gdd: design/gdd/combat-state-machine.md
+    requirement: "No trade mechanism — first hit wins (MVP simplicity)"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  - id: TR-CBT-040
+    system: combat
+    gdd: design/gdd/combat-state-machine.md
+    requirement: "Visual: Startup glow (class color), Active brightest+sweep, Recovery fade; HitStun white flash every 2 frames; Knockback speed lines"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  - id: TR-CBT-041
+    system: combat
+    gdd: design/gdd/combat-state-machine.md
+    requirement: "Hitstop visual: global time freeze + screen micro-shake (1-2px, 1-2 frames) + hit point burst"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  - id: TR-CBT-042
+    system: combat
+    gdd: design/gdd/combat-state-machine.md
+    requirement: "Audio events: OnAttackStartup, OnAttackHit, OnAttackMiss, OnAttackEnd, OnHitReceived, OnKnockback, OnHitstopStart, OnHitstopEnd"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  - id: TR-CBT-043
+    system: combat
+    gdd: design/gdd/combat-state-machine.md
+    requirement: "All frame counts start at 0, based on 60Hz fixed timestep"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  - id: TR-CBT-044
+    system: combat
+    gdd: design/gdd/combat-state-machine.md
+    requirement: "5 tuning knobs all require external data configuration"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  # ============================================================
+  # Remaining systems — representative TRs (full list per GDD extraction)
+  # ATK, COL, DMG, KBL, CLS, FOC, SKD, SKW, SEQ, GST, MCH, ARE, HUD, GCP
+  # These entries cover the architecturally significant requirements
+  # ============================================================
+
+  # ATK — Attack System (key TRs)
+  - id: TR-ATK-001
+    system: attack
+    gdd: design/gdd/attack-system.md
+    requirement: "Unified AttackData processing: base attacks (ClassData) and skill attacks (IAttackDataProvider) use identical code path"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  - id: TR-ATK-002
+    system: attack
+    gdd: design/gdd/attack-system.md
+    requirement: "AttackData struct with 14 fields: AttackId, StartupFrames, ActiveFrames, RecoveryFrames, HitStunFrames, BaseDamage, BaseKnockback, IsProjectile, HitstopFrames, HitboxOffset, HitboxSize, ProjectileSpeed, ProjectileLifetime, CancelTable"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  - id: TR-ATK-005
+    system: attack
+    gdd: design/gdd/attack-system.md
+    requirement: "Hitbox lifecycle driven by attack phases: Startup=none, Active=create+position, Recovery=destroy"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  - id: TR-ATK-007
+    system: attack
+    gdd: design/gdd/attack-system.md
+    requirement: "Projectile: spawn at character position + HitboxOffset * facing during Active phase, independent hitbox"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  - id: TR-ATK-008
+    system: attack
+    gdd: design/gdd/attack-system.md
+    requirement: "Multi-hit prevention: same AttackId can only hit same target once via HitTargets Set<int>"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  - id: TR-ATK-009
+    system: attack
+    gdd: design/gdd/attack-system.md
+    requirement: "Hitstop: pause frame counting for both attacker and defender, animations freeze, hitbox stays active"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  - id: TR-ATK-023
+    system: attack
+    gdd: design/gdd/attack-system.md
+    requirement: "MaxProjectileCount=5, limits on-screen projectiles"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  - id: TR-ATK-025
+    system: attack
+    gdd: design/gdd/attack-system.md
+    requirement: "Attack system frame time < 1.0ms (including hitbox update and projectile movement)"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  - id: TR-ATK-035
+    system: attack
+    gdd: design/gdd/attack-system.md
+    requirement: "Attack system has no independent FSM; attack lifecycle driven by Combat FSM"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  # COL — Collision System (key TRs)
+  - id: TR-COL-001
+    system: collision
+    gdd: design/gdd/collision-system.md
+    requirement: "Unity Physics2D Trigger detection (BoxCollider2D, IsTrigger=true)"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  - id: TR-COL-002
+    system: collision
+    gdd: design/gdd/collision-system.md
+    requirement: "Layer architecture: Hitbox↔Hurtbox, Hitbox↔SolidPlatform only; Hitbox not with Hitbox; Hurtbox not with Hurtbox"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  - id: TR-COL-008
+    system: collision
+    gdd: design/gdd/collision-system.md
+    requirement: "Hit detection pipeline per physics frame: OnTriggerEnter2D → identity → self-exclusion → multi-hit check → hit point calc → dispatch"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  - id: TR-COL-009
+    system: collision
+    gdd: design/gdd/collision-system.md
+    requirement: "HitEvent struct: AttackerId, TargetId, AttackId, HitPoint, HitboxCenter, HurtboxCenter"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  - id: TR-COL-016
+    system: collision
+    gdd: design/gdd/collision-system.md
+    requirement: "Collision system is stateless detection layer, no internal FSM, driven by upstream attack system and Unity physics"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  - id: TR-COL-018
+    system: collision
+    gdd: design/gdd/collision-system.md
+    requirement: "Projectile penetration prevention: min hitbox width = Max(designerWidth, ProjectileSpeed * dt * 2)"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  # DMG — Damage Calculation (key TRs — no ADR exists)
+  - id: TR-DMG-001
+    system: damage
+    gdd: design/gdd/damage-calculation-system.md
+    requirement: "Each character maintains float DamagePercent, starts at 0.0, only increases (no healing in MVP)"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  - id: TR-DMG-003
+    system: damage
+    gdd: design/gdd/damage-calculation-system.md
+    requirement: "KnockbackMagnitude = BaseKnockbackGrowth * (DamagePercent / 100) * BaseKnockback + BaseKnockback"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  - id: TR-DMG-015
+    system: damage
+    gdd: design/gdd/damage-calculation-system.md
+    requirement: "IDamageSystem interface: OnHitProcessed, GetDamagePercent, ResetDamage, ResetAll"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  - id: TR-DMG-021
+    system: damage
+    gdd: design/gdd/damage-calculation-system.md
+    requirement: "BaseKnockbackGrowth is global tuning knob (default 0.05, range 0.01-0.15)"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  # KBL — Knockback Launch (key TRs — no ADR exists)
+  - id: TR-KBL-001
+    system: knockback
+    gdd: design/gdd/knockback-launch-system.md
+    requirement: "Knockback direction: horizontalDir = sign(target.x - attacker.x), fallback to attacker facing"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  - id: TR-KBL-003
+    system: knockback
+    gdd: design/gdd/knockback-launch-system.md
+    requirement: "KnockbackSpeed = KnockbackMagnitude * KnockbackSpeedMultiplier (default 2.0)"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  - id: TR-KBL-005
+    system: knockback
+    gdd: design/gdd/knockback-launch-system.md
+    requirement: "Unopérable period physics: Vx *= KnockbackDecayRate; Vy -= Gravity * dt, Vy clamped to [-TerminalVelocity, +inf]"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  - id: TR-KBL-013
+    system: knockback
+    gdd: design/gdd/knockback-launch-system.md
+    requirement: "KO check every frame: position outside Blast Zone bounds (strict inequality)"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  - id: TR-KBL-014
+    system: knockback
+    gdd: design/gdd/knockback-launch-system.md
+    requirement: "Blast Zone bounds via IArenaDataProvider.GetBlastZone() → BoundsData {left, right, top, bottom}"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  # CLS — Class System (key TRs)
+  - id: TR-CLS-001
+    system: class
+    gdd: design/gdd/class-system.md
+    requirement: "Each class defined as Unity ScriptableObject with 3 data groups: movement, attacks, visual identity"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  - id: TR-CLS-011
+    system: class
+    gdd: design/gdd/class-system.md
+    requirement: "Post-selection injection: movement params to 3C, attack data to attack system (one-time)"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  - id: TR-CLS-017
+    system: class
+    gdd: design/gdd/class-system.md
+    requirement: "Mirror match: two players can select same class, distinguished by P1/P2 overlay color"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  # FOC — Focus System (key TRs — no ADR exists)
+  - id: TR-FOC-001
+    system: focus
+    gdd: design/gdd/focus-system.md
+    requirement: "Each character has FocusPoints (float) and UnlockedCount (int), with FocusCap and MaxSkillsPerMatch limits"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  - id: TR-FOC-003
+    system: focus
+    gdd: design/gdd/focus-system.md
+    requirement: "Subscribe to OnAttackHit: attacker gains BaseDamage*0.30, defender gains BaseDamage*0.10 FocusPoints"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  - id: TR-FOC-004
+    system: focus
+    gdd: design/gdd/focus-system.md
+    requirement: "Escalating thresholds: UnlockThreshold_n = FocusBaseThreshold + (n * FocusThresholdGrowth)"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  - id: TR-FOC-005
+    system: focus
+    gdd: design/gdd/focus-system.md
+    requirement: "Auto-unlock: when FocusPoints >= Threshold and UnlockedCount < MaxSkillsPerMatch, fire OnFocusReady same frame"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  # SKD — Skill Database (key TRs)
+  - id: TR-SKD-001
+    system: skill-database
+    gdd: design/gdd/skill-database.md
+    requirement: "Skill data as Unity ScriptableObject (SkillData), one SO per skill"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  - id: TR-SKD-003
+    system: skill-database
+    gdd: design/gdd/skill-database.md
+    requirement: "AttackData format identical to class base attacks — unified consumption by attack system"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  - id: TR-SKD-004
+    system: skill-database
+    gdd: design/gdd/skill-database.md
+    requirement: "ISkillDatabase read-only query interface: GetAllSkills, GetById, GetByRarity, GetByTag, GetSkillCount"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  # SKW — Skill Draw System (key TRs — no ADR exists)
+  - id: TR-SKW-001
+    system: skill-draw
+    gdd: design/gdd/skill-draw-system.md
+    requirement: "DrawState FSM with 4 states: Idle → Drawing → AwaitingSelection → Complete → Idle"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  - id: TR-SKW-005
+    system: skill-draw
+    gdd: design/gdd/skill-draw-system.md
+    requirement: "Weighted random without replacement: draw 3 candidates, remove after selection, renormalize remaining weights"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  - id: TR-SKW-009
+    system: skill-draw
+    gdd: design/gdd/skill-draw-system.md
+    requirement: "5-second timeout: auto-select first candidate on timeout, timer starts from OnDrawReady event"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  - id: TR-SKW-023
+    system: skill-draw
+    gdd: design/gdd/skill-draw-system.md
+    requirement: "Selection UI does not pause game — opponent can move/attack while selection is active"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  # SEQ — Skill Equipment Management (key TRs)
+  - id: TR-SEQ-001
+    system: skill-equipment
+    gdd: design/gdd/skill-equipment-management.md
+    requirement: "4 SkillSlots per character (state Empty/Equipped + runtime SkillInstance), fill in order 1→2→3→4"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  - id: TR-SEQ-004
+    system: skill-equipment
+    gdd: design/gdd/skill-equipment-management.md
+    requirement: "Equip flow: find first empty slot → create SkillInstance from SkillData → RegisterState to CombatFSM"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  - id: TR-SEQ-015
+    system: skill-equipment
+    gdd: design/gdd/skill-equipment-management.md
+    requirement: "OnRoundStart: skills preserved across rounds (跨局成长弧线); OnMatchEnd: DeregisterAllSkillStates() + clear all slots"
+    created: "2026-05-24"
+    revised: "2026-05-24"
+    revised: ""
+    status: active
+
+  # GST — Game State Management (key TRs — no ADR exists)
+  - id: TR-GST-001
+    system: game-state
+    gdd: design/gdd/game-state-management.md
+    requirement: "Global FSM with 7 GamePhase states: MainMenu, CharacterSelect, MatchLoading, Countdown, Battle, BattleEnd, Results"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  - id: TR-GST-003
+    system: game-state
+    gdd: design/gdd/game-state-management.md
+    requirement: "2 Unity scenes: MenuScene (main menu only) and GameScene (all other phases)"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  - id: TR-GST-008
+    system: game-state
+    gdd: design/gdd/game-state-management.md
+    requirement: "IGameState interface as sole entry point for all game state queries"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  # MCH — Match Management (key TRs — no ADR exists)
+  - id: TR-MCH-001
+    system: match-management
+    gdd: design/gdd/match-management-system.md
+    requirement: "Internal FSM: Inactive, WaitingForBattle, RoundInProgress, RoundResolved, MatchComplete"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  - id: TR-MCH-009
+    system: match-management
+    gdd: design/gdd/match-management-system.md
+    requirement: "Round start reset cascade: ResetDamagePercent, ResetFocus, ResetPosition, ResetToIdle"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  - id: TR-MCH-012
+    system: match-management
+    gdd: design/gdd/match-management-system.md
+    requirement: "BREAKING CHANGE: SignalKO → SignalRoundEnd(winnerIndex, matchOver: bool) in IGameState"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  # ARE — Arena/Platform System (key TRs)
+  - id: TR-ARE-001
+    system: arena
+    gdd: design/gdd/arena-platform-system.md
+    requirement: "ArenaConfig ScriptableObject: arenaId, platforms[], blastZone, cameraBounds, spawnPoints[], themeId"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  - id: TR-ARE-002
+    system: arena
+    gdd: design/gdd/arena-platform-system.md
+    requirement: "Two platform types: Solid (BoxCollider2D) and PassThrough (BoxCollider2D + PlatformEffector2D)"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  - id: TR-ARE-010
+    system: arena
+    gdd: design/gdd/arena-platform-system.md
+    requirement: "IArenaDataProvider: GetBlastZone, GetCameraBounds, GetPlatforms, GetSpawnPoints, GetState, LoadArena, UnloadArena"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  # HUD — Battle HUD (key TRs — no ADR exists)
+  - id: TR-HUD-001
+    system: hud
+    gdd: design/gdd/battle-hud.md
+    requirement: "HUD is pure passive rendering — subscribes to events, never writes to game logic"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  - id: TR-HUD-019
+    system: hud
+    gdd: design/gdd/battle-hud.md
+    requirement: "UI framework: Unity UI Toolkit (UXML/USS) recommended, reference resolution 1920x1080"
+    created: "2026-05-24"
+    revised: ""
+    status: active
+
+  - id: TR-HUD-021
+    system: hud
+    gdd: design/gdd/battle-hud.md
+    requirement: "HUD performance budget: < 0.8ms per frame (5% of 16.6ms frame budget)"
+    created: "2026-05-24"
+    revised: ""
+    status: active

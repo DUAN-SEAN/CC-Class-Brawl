@@ -1,0 +1,166 @@
+/* ============================================================
+ * USS Main Menu Components — Visual styles for all elements
+ * Source: design/ux/main-menu-visual-design.md sections 4-5
+ * ============================================================ */
+
+/* ---- CTA Button ---- */
+.cta-button {
+    width: var(--mm-cta-width);
+    height: var(--mm-cta-height);
+    background-color: var(--mm-cta-bg);
+    border-color: var(--mm-cta-border-color);
+    border-width: var(--mm-cta-border-width);
+    border-radius: var(--mm-cta-border-radius);
+    padding-top: var(--mm-cta-padding-top);
+    padding-bottom: var(--mm-cta-padding-bottom);
+    padding-left: var(--mm-cta-padding-h);
+    padding-right: var(--mm-cta-padding-h);
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.cta-button:focus {
+    border-color: var(--mm-cta-border-color);
+    border-width: var(--mm-cta-border-width);
+}
+
+.cta-button:active {
+    scale: 0.97;
+}
+
+.cta-main-text {
+    font-family: var(--font-family);
+    font-size: var(--mm-cta-font-size);
+    font-weight: var(--font-weight-semibold);
+    letter-spacing: var(--mm-cta-letter-spacing);
+    -unity-text-align: middle-center;
+    color: var(--mm-cta-text-color);
+}
+
+.cta-sub-text {
+    font-family: var(--font-family);
+    font-size: var(--mm-cta-hint-font-size);
+    font-weight: var(--font-weight-medium);
+    letter-spacing: var(--mm-cta-hint-letter-spacing);
+    -unity-text-align: middle-center;
+    color: var(--mm-cta-hint-color);
+    margin-top: 4px;
+}
+
+/* Loading state */
+.cta-button.loading .cta-main-text {
+    color: var(--mm-cta-hint-color);
+}
+
+/* ---- Top Bar Buttons ---- */
+.top-bar-btn {
+    background-color: var(--mm-topbar-btn-bg);
+    border-width: 0;
+    border-radius: var(--mm-topbar-btn-border-radius);
+    padding-left: var(--mm-topbar-btn-padding-h);
+    padding-right: var(--mm-topbar-btn-padding-h);
+    padding-top: var(--mm-topbar-btn-padding-v);
+    padding-bottom: var(--mm-topbar-btn-padding-v);
+    font-family: var(--font-family);
+    font-size: var(--mm-topbar-btn-font-size);
+    font-weight: var(--font-weight-medium);
+    letter-spacing: var(--mm-topbar-btn-letter-spacing);
+    color: var(--mm-topbar-btn-text-color);
+    transition: border-color var(--mm-anim-focus-transition) linear,
+                border-width var(--mm-anim-focus-transition) linear,
+                color var(--mm-anim-focus-transition) linear;
+}
+
+.top-bar-btn:focus {
+    border-color: var(--mm-topbar-focus-border-color);
+    border-width: var(--mm-topbar-focus-border-width);
+    color: var(--mm-topbar-btn-text-color-focused);
+}
+
+.top-bar-btn:active {
+    scale: 0.97;
+}
+
+/* ---- Title ---- */
+.title-cn {
+    font-family: var(--font-family);
+    font-size: var(--mm-title-cn-font-size);
+    font-weight: var(--font-weight-semibold);
+    letter-spacing: var(--mm-title-cn-letter-spacing);
+    color: var(--mm-title-cn-color);
+    -unity-text-align: middle-center;
+}
+
+.title-en {
+    font-family: var(--font-family);
+    font-size: var(--mm-title-en-font-size);
+    font-weight: var(--font-weight-medium);
+    letter-spacing: var(--mm-title-en-letter-spacing);
+    color: var(--mm-title-en-color);
+    -unity-text-align: middle-center;
+    margin-top: var(--mm-title-gap);
+}
+
+/* ---- Footer ---- */
+.version-text {
+    font-family: var(--font-family);
+    font-size: var(--mm-version-font-size);
+    font-weight: var(--font-weight-regular);
+    letter-spacing: var(--mm-version-letter-spacing);
+    color: var(--mm-version-color);
+}
+
+.copyright-text {
+    font-family: var(--font-family);
+    font-size: var(--mm-version-font-size);
+    font-weight: var(--font-weight-regular);
+    letter-spacing: var(--mm-version-letter-spacing);
+    color: var(--mm-version-color);
+    -unity-text-align: lower-right;
+}
+
+/* ---- Dialog / Modal ---- */
+.dialog-overlay {
+    background-color: var(--mm-modal-overlay-color);
+}
+
+.dialog-panel {
+    background-color: var(--mm-modal-bg);
+    border-color: var(--mm-modal-border-color);
+    border-width: var(--mm-modal-border-width);
+    border-radius: var(--mm-modal-border-radius);
+}
+
+.dialog-title {
+    font-family: var(--font-family);
+    font-size: var(--mm-modal-title-font-size);
+    font-weight: var(--font-weight-semibold);
+    letter-spacing: var(--mm-modal-title-letter-spacing);
+    color: var(--mm-modal-title-color);
+    -unity-text-align: middle-center;
+}
+
+.dialog-btn {
+    background-color: var(--mm-modal-btn-bg);
+    border-width: 0;
+    border-radius: var(--mm-modal-btn-border-radius);
+    font-family: var(--font-family);
+    font-size: var(--mm-modal-btn-font-size);
+    font-weight: var(--font-weight-medium);
+    letter-spacing: var(--mm-modal-btn-letter-spacing);
+    color: var(--mm-modal-btn-text-color);
+    transition: border-color var(--mm-anim-focus-transition) linear,
+                border-width var(--mm-anim-focus-transition) linear,
+                color var(--mm-anim-focus-transition) linear;
+}
+
+.dialog-btn:focus {
+    border-color: var(--mm-modal-btn-focus-border-color);
+    border-width: var(--mm-modal-btn-focus-border-width);
+    color: rgb(255, 255, 255);
+}
+
+.dialog-btn:active {
+    scale: 0.97;
+}

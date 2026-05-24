@@ -1,0 +1,69 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements"
+         xmlns:uie="UnityEditor.UIExtensions"
+         editor-extension-mode="False">
+
+  <!-- Main Menu Root -->
+  <ui:VisualElement name="MainMenu" class="menu-root fade-out"
+                    style="opacity: 0;">
+
+    <!-- ============================================ -->
+    <!-- Background Layer (breathing light animation) -->
+    <!-- ============================================ -->
+    <ui:VisualElement name="BackgroundLayer" class="menu-background" />
+
+    <!-- ============================================ -->
+    <!-- Top Bar (secondary actions)                  -->
+    <!-- ============================================ -->
+    <ui:VisualElement name="TopBar" class="top-bar">
+      <ui:Button name="SettingsButton" class="top-bar-btn" text="&#35774;&#32622;" />
+      <ui:Button name="HowToPlayButton" class="top-bar-btn" text="&#25805;&#20316;&#25351;&#21335;" />
+      <ui:Button name="QuitButton" class="top-bar-btn" text="&#36864;&#20986;" />
+    </ui:VisualElement>
+
+    <!-- ============================================ -->
+    <!-- Center Focus Area (CTA)                      -->
+    <!-- ============================================ -->
+    <ui:VisualElement name="CenterArea" class="center-area">
+      <ui:Button name="StartBattleButton" class="cta-button">
+        <ui:Label name="CTAMainText" class="cta-main-text" text="&#24320;&#22987;&#23545;&#25112;" />
+        <ui:Label name="CTASubText" class="cta-sub-text" text="&#25353; A &#24320;&#22987;" />
+      </ui:Button>
+    </ui:VisualElement>
+
+    <!-- ============================================ -->
+    <!-- Bottom Atmosphere Area                       -->
+    <!-- ============================================ -->
+    <ui:VisualElement name="BottomArea" class="bottom-area">
+      <ui:VisualElement name="TitleContainer" class="title-container">
+        <ui:VisualElement name="TitleLineLeft" class="title-deco-line" />
+        <ui:VisualElement name="TitleTextBlock" class="title-text-block">
+          <ui:Label name="TitleCN" class="title-cn" text="&#32844;&#19994;&#23545;&#20915;" />
+          <ui:Label name="TitleEN" class="title-en" text="CLASS BRAWL" />
+        </ui:VisualElement>
+        <ui:VisualElement name="TitleLineRight" class="title-deco-line" />
+      </ui:VisualElement>
+    </ui:VisualElement>
+
+    <!-- ============================================ -->
+    <!-- Footer (version + copyright)                 -->
+    <!-- ============================================ -->
+    <ui:VisualElement name="Footer" class="footer">
+      <ui:Label name="VersionText" class="version-text" text="v0.1.0" />
+      <ui:Label name="CopyrightText" class="copyright-text" text="(c) 2026" />
+    </ui:VisualElement>
+
+    <!-- ============================================ -->
+    <!-- Quit Confirmation Dialog                     -->
+    <!-- ============================================ -->
+    <ui:VisualElement name="QuitOverlay" class="dialog-overlay" style="display: none;">
+      <ui:VisualElement name="QuitDialog" class="dialog-panel">
+        <ui:Label name="QuitDialogTitle" class="dialog-title" text="&#30830;&#23450;&#36864;&#20986;&#28216;&#25103;&#65311;" />
+        <ui:VisualElement name="QuitDialogButtons" class="dialog-buttons">
+          <ui:Button name="DialogCancelButton" class="dialog-btn" text="&#21462;&#28040;" />
+          <ui:Button name="DialogConfirmButton" class="dialog-btn" text="&#30830;&#35748;" />
+        </ui:VisualElement>
+      </ui:VisualElement>
+    </ui:VisualElement>
+
+  </ui:VisualElement>
+</ui:UXML>

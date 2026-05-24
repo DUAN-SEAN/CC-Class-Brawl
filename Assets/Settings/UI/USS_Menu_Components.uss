@@ -1,0 +1,159 @@
+/* ============================================================
+ * USS Main Menu Components — Visual states, transitions, focus
+ * Source: design/ux/main-menu-visual-design.md sections 2.3, 4
+ * ============================================================ */
+
+/* ---- CTA Main Text ---- */
+.cta-main-text {
+    font-family: var(--font-family);
+    font-weight: var(--font-weight-semibold);
+    font-size: var(--cta-main-font-size);
+    letter-spacing: var(--cta-main-letter-spacing);
+    line-height: var(--cta-main-line-height);
+    color: var(--cta-text-color);
+    font-feature-settings: "tnum";
+}
+
+/* ---- CTA Sub Text ---- */
+.cta-sub-text {
+    font-family: var(--font-family);
+    font-weight: var(--font-weight-medium);
+    font-size: var(--cta-sub-font-size);
+    letter-spacing: var(--cta-sub-letter-spacing);
+    line-height: var(--cta-sub-line-height);
+    color: var(--cta-sub-text-color);
+}
+
+/* ---- CTA Button Focus State ---- */
+.cta-button:focus {
+    border-color: var(--cta-border-color);
+    border-opacity: 1.0;
+    scale: 1.02;
+    transition: scale var(--anim-press-release) cubic-bezier(0.33, 1, 0.68, 1);
+}
+
+/* ---- CTA Button Pressed State ---- */
+.cta-button:active {
+    scale: 0.97;
+    transition: scale var(--anim-press-down) linear;
+}
+
+/* ---- CTA Pulse State (driven by C# schedule loop) ---- */
+.cta-button.pulse-bright {
+    border-color: var(--cta-border-color);
+    border-opacity: 1.0;
+}
+
+.cta-button.pulse-dim {
+    border-color: var(--cta-border-color);
+    border-opacity: 0.4;
+}
+
+/* ---- CTA Loading State ---- */
+.cta-button.loading .cta-main-text {
+    color: var(--cta-text-color);
+}
+
+.cta-button.loading .cta-sub-text {
+    display: none;
+}
+
+/* ---- Top Bar Button Focus State ---- */
+.top-bar-btn:focus {
+    border-width: 2px;
+    border-color: var(--topbar-focus-border);
+    color: var(--topbar-focus-text);
+    transition: color var(--anim-color-transition) linear,
+                border-color var(--anim-focus-indicator) linear;
+}
+
+/* ---- Top Bar Button Pressed State ---- */
+.top-bar-btn:active {
+    scale: 0.97;
+    transition: scale var(--anim-press-down) linear;
+}
+
+/* ---- Title CN ---- */
+.title-cn {
+    font-family: "Noto Sans SC", var(--font-family);
+    font-weight: var(--font-weight-semibold);
+    font-size: var(--title-cn-font-size);
+    letter-spacing: var(--title-cn-letter-spacing);
+    line-height: var(--title-cn-line-height);
+    color: var(--title-cn-color);
+}
+
+/* ---- Title EN ---- */
+.title-en {
+    font-family: "Exo 2", var(--font-family);
+    font-weight: var(--font-weight-medium);
+    font-size: var(--title-en-font-size);
+    letter-spacing: var(--title-en-letter-spacing);
+    line-height: var(--title-en-line-height);
+    color: var(--title-en-color);
+    text-transform: uppercase;
+}
+
+/* ---- Version Text ---- */
+.version-text {
+    font-family: "Exo 2", var(--font-family);
+    font-weight: var(--font-weight-regular);
+    font-size: var(--footer-font-size);
+    letter-spacing: var(--footer-letter-spacing);
+    line-height: var(--footer-line-height);
+    color: var(--version-color);
+}
+
+/* ---- Copyright Text ---- */
+.copyright-text {
+    font-family: "Exo 2", var(--font-family);
+    font-weight: var(--font-weight-regular);
+    font-size: var(--footer-font-size);
+    letter-spacing: var(--footer-letter-spacing);
+    line-height: var(--footer-line-height);
+    color: var(--version-color);
+}
+
+/* ---- Dialog Title ---- */
+.dialog-title {
+    font-family: "Noto Sans SC", var(--font-family);
+    font-weight: var(--font-weight-semibold);
+    font-size: var(--dialog-title-font-size);
+    letter-spacing: var(--dialog-title-letter-spacing);
+    line-height: var(--dialog-title-line-height);
+    color: var(--color-text-emphasis);
+    -unity-text-align: middle-center;
+}
+
+/* ---- Dialog Button Focus State ---- */
+.dialog-btn:focus {
+    border-width: 2px;
+    border-color: var(--topbar-focus-border);
+    color: var(--topbar-focus-text);
+    transition: color var(--anim-color-transition) linear,
+                border-color var(--anim-focus-indicator) linear;
+}
+
+/* ---- Dialog Button Pressed State ---- */
+.dialog-btn:active {
+    scale: 0.97;
+    transition: scale var(--anim-press-down) linear;
+}
+
+/* ---- Top Bar Button Default Transition ---- */
+.top-bar-btn {
+    transition: color var(--anim-color-transition) linear,
+                scale var(--anim-press-release) cubic-bezier(0.33, 1, 0.68, 1);
+}
+
+/* ---- Dialog Button Default Transition ---- */
+.dialog-btn {
+    transition: color var(--anim-color-transition) linear,
+                scale var(--anim-press-release) cubic-bezier(0.33, 1, 0.68, 1);
+}
+
+/* ---- CTA Button Default Transition ---- */
+.cta-button {
+    transition: scale var(--anim-press-release) cubic-bezier(0.33, 1, 0.68, 1),
+                border-opacity var(--anim-cta-pulse-period) linear;
+}

@@ -1,0 +1,21 @@
+/* ============================================================
+ * USS Main Menu Reduced Motion Mode
+ * Source: design/ux/main-menu-visual-design.md section 5.7
+ * Activated by adding "reduced-motion" class to menu root.
+ *
+ * Removes all decorative animations:
+ * - CTA pulse -> fixed border opacity
+ * - Background breathing -> stopped
+ * - Entrance stagger -> single 0.3s fade
+ * - Modal scale -> opacity-only transition
+ *
+ * Preserved: focus indicators, press feedback, state transitions
+ * ============================================================ */
+
+.reduced-motion .pulsing {
+    border-color: rgba(240, 192, 64, 0.70);
+}
+
+.reduced-motion .breathing {
+    opacity: 1.0;
+}

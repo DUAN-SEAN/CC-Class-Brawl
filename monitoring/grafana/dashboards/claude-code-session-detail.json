@@ -1,0 +1,353 @@
+{
+  "annotations": { "list": [] },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 1,
+  "id": null,
+  "links": [
+    { "title": "Back to Overview", "url": "/d/claude-code-obs", "type": "dashboard" }
+  ],
+  "panels": [
+    {
+      "title": "Session",
+      "type": "row",
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 0 },
+      "id": 200,
+      "collapsed": false,
+      "panels": []
+    },
+    {
+      "title": "All Sessions",
+      "gridPos": { "h": 7, "w": 24, "x": 0, "y": 1 },
+      "id": 201,
+      "type": "table",
+      "datasource": { "uid": "prometheus" },
+      "targets": [
+        {
+          "expr": "sort_desc(claude_code_cost_usage_USD_total)",
+          "format": "table",
+          "instant": true,
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": [
+          { "matcher": { "id": "byName", "options": "Time" }, "properties": [{ "id": "custom.hidden", "value": true }] },
+          { "matcher": { "id": "byName", "options": "__name__" }, "properties": [{ "id": "custom.hidden", "value": true }] },
+          { "matcher": { "id": "byName", "options": "exported_job" }, "properties": [{ "id": "custom.hidden", "value": true }] },
+          { "matcher": { "id": "byName", "options": "instance" }, "properties": [{ "id": "custom.hidden", "value": true }] },
+          { "matcher": { "id": "byName", "options": "job" }, "properties": [{ "id": "custom.hidden", "value": true }] },
+          { "matcher": { "id": "byName", "options": "environment" }, "properties": [{ "id": "custom.hidden", "value": true }] },
+          { "matcher": { "id": "byName", "options": "service_name" }, "properties": [{ "id": "custom.hidden", "value": true }] },
+          { "matcher": { "id": "byName", "options": "service_version" }, "properties": [{ "id": "custom.hidden", "value": true }] },
+          { "matcher": { "id": "byName", "options": "os_type" }, "properties": [{ "id": "custom.hidden", "value": true }] },
+          { "matcher": { "id": "byName", "options": "os_version" }, "properties": [{ "id": "custom.hidden", "value": true }] },
+          { "matcher": { "id": "byName", "options": "host_arch" }, "properties": [{ "id": "custom.hidden", "value": true }] },
+          { "matcher": { "id": "byName", "options": "terminal_type" }, "properties": [{ "id": "custom.hidden", "value": true }] },
+          { "matcher": { "id": "byName", "options": "otel_scope_name" }, "properties": [{ "id": "custom.hidden", "value": true }] },
+          { "matcher": { "id": "byName", "options": "otel_scope_schema_url" }, "properties": [{ "id": "custom.hidden", "value": true }] },
+          { "matcher": { "id": "byName", "options": "otel_scope_version" }, "properties": [{ "id": "custom.hidden", "value": true }] },
+          { "matcher": { "id": "byName", "options": "user_id" }, "properties": [{ "id": "custom.hidden", "value": true }] },
+          { "matcher": { "id": "byName", "options": "effort" }, "properties": [{ "id": "custom.hidden", "value": true }] },
+          { "matcher": { "id": "byName", "options": "query_source" }, "properties": [{ "id": "displayName", "value": "Source" }] },
+          { "matcher": { "id": "byName", "options": "agent_name" }, "properties": [{ "id": "displayName", "value": "Agent" }] },
+          { "matcher": { "id": "byName", "options": "skill_name" }, "properties": [{ "id": "displayName", "value": "Skill" }] },
+          { "matcher": { "id": "byName", "options": "model" }, "properties": [{ "id": "displayName", "value": "Model" }] },
+          { "matcher": { "id": "byName", "options": "Value" }, "properties": [{ "id": "displayName", "value": "Cost" }, { "id": "unit", "value": "currencyUSD" }, { "id": "decimals", "value": 4 }] },
+          {
+            "matcher": { "id": "byName", "options": "session_id" },
+            "properties": [
+              { "id": "displayName", "value": "Session" },
+              { "id": "links", "value": [{ "title": "View details", "url": "/d/claude-code-session?orgId=1&var-session_id=${__data.fields.Session}&from=${__from}&to=${__to}" }] }
+            ]
+          }
+        ]
+      },
+      "options": {
+        "showHeader": true,
+        "sortBy": [{ "displayName": "Cost", "desc": true }],
+        "footer": { "show": true, "reducer": ["sum"] },
+        "cellHeight": "sm"
+      }
+    },
+    {
+      "title": "Cost",
+      "gridPos": { "h": 3, "w": 6, "x": 0, "y": 8 },
+      "id": 2,
+      "type": "stat",
+      "datasource": { "uid": "prometheus" },
+      "targets": [{ "expr": "sum(claude_code_cost_usage_USD_total{session_id=\"$session_id\"})", "refId": "A" }],
+      "fieldConfig": { "defaults": { "color": { "fixedColor": "orange", "mode": "fixed" }, "unit": "currencyUSD", "decimals": 4 } },
+      "options": { "colorMode": "value", "graphMode": "none", "reduceOptions": { "calcs": ["lastNotNull"] } }
+    },
+    {
+      "title": "Tokens",
+      "gridPos": { "h": 3, "w": 6, "x": 6, "y": 8 },
+      "id": 3,
+      "type": "stat",
+      "datasource": { "uid": "prometheus" },
+      "targets": [{ "expr": "sum(claude_code_token_usage_tokens_total{session_id=\"$session_id\"})", "refId": "A" }],
+      "fieldConfig": { "defaults": { "color": { "fixedColor": "purple", "mode": "fixed" }, "unit": "short" } },
+      "options": { "colorMode": "value", "graphMode": "none", "reduceOptions": { "calcs": ["lastNotNull"] } }
+    },
+    {
+      "title": "API Calls",
+      "gridPos": { "h": 3, "w": 6, "x": 12, "y": 8 },
+      "id": 1,
+      "type": "stat",
+      "datasource": { "uid": "loki" },
+      "targets": [{ "expr": "sum(count_over_time({service_name=\"claude-code\"} | session_id=\"$session_id\" | event_name=\"api_request\" [$__range]))", "refId": "A" }],
+      "fieldConfig": { "defaults": { "color": { "fixedColor": "blue", "mode": "fixed" }, "unit": "none" } },
+      "options": { "colorMode": "value", "graphMode": "none", "reduceOptions": { "calcs": ["lastNotNull"] } }
+    },
+    {
+      "title": "Errors",
+      "gridPos": { "h": 3, "w": 6, "x": 18, "y": 8 },
+      "id": 6,
+      "type": "stat",
+      "datasource": { "uid": "loki" },
+      "targets": [{ "expr": "sum(count_over_time({service_name=\"claude-code\"} | session_id=\"$session_id\" | event_name=~\"api_error|internal_error\" [$__range]))", "refId": "A" }],
+      "fieldConfig": { "defaults": { "color": { "mode": "thresholds" }, "thresholds": { "steps": [{ "color": "green", "value": null }, { "color": "red", "value": 1 }] } } },
+      "options": { "colorMode": "value", "graphMode": "none", "reduceOptions": { "calcs": ["lastNotNull"] } }
+    },
+    {
+      "title": "Event Timeline",
+      "description": "Each row is an event type, bands show activity periods",
+      "gridPos": { "h": 7, "w": 24, "x": 0, "y": 11 },
+      "id": 70,
+      "type": "state-timeline",
+      "datasource": { "uid": "loki" },
+      "targets": [
+        {
+          "expr": "sum by (event_name) (count_over_time({service_name=\"claude-code\"} | session_id=\"$session_id\" | event_name!=\"\" [$__interval]))",
+          "legendFormat": "{{event_name}}",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": { "color": { "mode": "palette-classic" }, "custom": { "lineWidth": 2, "fillOpacity": 60 } },
+        "overrides": [
+          { "matcher": { "id": "byName", "options": "api_request" }, "properties": [{ "id": "color", "value": { "fixedColor": "blue", "mode": "fixed" } }] },
+          { "matcher": { "id": "byName", "options": "tool_result" }, "properties": [{ "id": "color", "value": { "fixedColor": "green", "mode": "fixed" } }] },
+          { "matcher": { "id": "byName", "options": "tool_decision" }, "properties": [{ "id": "color", "value": { "fixedColor": "semi-dark-green", "mode": "fixed" } }] },
+          { "matcher": { "id": "byName", "options": "subagent_completed" }, "properties": [{ "id": "color", "value": { "fixedColor": "purple", "mode": "fixed" } }] },
+          { "matcher": { "id": "byName", "options": "hook_execution_complete" }, "properties": [{ "id": "color", "value": { "fixedColor": "orange", "mode": "fixed" } }] },
+          { "matcher": { "id": "byName", "options": "hook_execution_start" }, "properties": [{ "id": "color", "value": { "fixedColor": "super-light-orange", "mode": "fixed" } }] },
+          { "matcher": { "id": "byName", "options": "user_prompt" }, "properties": [{ "id": "color", "value": { "fixedColor": "red", "mode": "fixed" } }] },
+          { "matcher": { "id": "byName", "options": "api_error" }, "properties": [{ "id": "color", "value": { "fixedColor": "dark-red", "mode": "fixed" } }] },
+          { "matcher": { "id": "byName", "options": "compaction" }, "properties": [{ "id": "color", "value": { "fixedColor": "dark-purple", "mode": "fixed" } }] }
+        ]
+      },
+      "options": { "showLegend": true, "legendDisplayMode": "list", "legendPlacement": "right", "rowHeight": 0.9, "mergeValues": true }
+    },
+
+    {
+      "title": "API Requests",
+      "type": "row",
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 18 },
+      "id": 201,
+      "collapsed": false,
+      "panels": []
+    },
+    {
+      "title": "API Requests",
+      "gridPos": { "h": 7, "w": 24, "x": 0, "y": 19 },
+      "id": 10,
+      "type": "table",
+      "datasource": { "uid": "loki" },
+      "targets": [
+        {
+          "expr": "{service_name=\"claude-code\"} | session_id=\"$session_id\" | event_name=\"api_request\"",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": [
+          { "matcher": { "id": "byRegexp", "options": "^(Time|line|detected_level|service_name|session_id|event_name|event_sequence|observed_timestamp|terminal_type|os_type|os_version|host_arch|environment|scope_name|scope_version|service_version|user_id|prompt_id|cache_creation_tokens|cost_usd_micros|speed|attempt)$" }, "properties": [{ "id": "custom.hidden", "value": true }] },
+          { "matcher": { "id": "byName", "options": "event_timestamp" }, "properties": [{ "id": "displayName", "value": "Time" }] },
+          { "matcher": { "id": "byName", "options": "model" }, "properties": [{ "id": "displayName", "value": "Model" }] },
+          { "matcher": { "id": "byName", "options": "query_source" }, "properties": [{ "id": "displayName", "value": "Source" }] },
+          { "matcher": { "id": "byName", "options": "input_tokens" }, "properties": [{ "id": "displayName", "value": "In" }] },
+          { "matcher": { "id": "byName", "options": "output_tokens" }, "properties": [{ "id": "displayName", "value": "Out" }] },
+          { "matcher": { "id": "byName", "options": "cache_read_tokens" }, "properties": [{ "id": "displayName", "value": "Cache" }] },
+          { "matcher": { "id": "byName", "options": "cost_usd" }, "properties": [{ "id": "displayName", "value": "Cost" }, { "id": "unit", "value": "currencyUSD" }, { "id": "decimals", "value": 4 }] },
+          { "matcher": { "id": "byName", "options": "duration_ms" }, "properties": [{ "id": "displayName", "value": "Latency" }, { "id": "unit", "value": "ms" }] }
+        ]
+      },
+      "options": { "showHeader": true, "sortBy": [{ "displayName": "Time", "desc": true }], "footer": { "show": true, "reducer": ["sum"] } }
+    },
+
+    {
+      "title": "Agents & Tools",
+      "type": "row",
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 26 },
+      "id": 202,
+      "collapsed": false,
+      "panels": []
+    },
+    {
+      "title": "Subagents",
+      "gridPos": { "h": 7, "w": 12, "x": 0, "y": 27 },
+      "id": 20,
+      "type": "table",
+      "datasource": { "uid": "loki" },
+      "targets": [
+        {
+          "expr": "{service_name=\"claude-code\"} | session_id=\"$session_id\" | event_name=\"subagent_completed\"",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": [
+          { "matcher": { "id": "byRegexp", "options": "^(Time|line|detected_level|service_name|session_id|event_name|event_sequence|observed_timestamp|terminal_type|os_type|os_version|host_arch|environment|scope_name|scope_version|service_version|user_id|prompt_id|is_built_in|is_async)$" }, "properties": [{ "id": "custom.hidden", "value": true }] },
+          { "matcher": { "id": "byName", "options": "event_timestamp" }, "properties": [{ "id": "displayName", "value": "Time" }] },
+          { "matcher": { "id": "byName", "options": "agent_type" }, "properties": [{ "id": "displayName", "value": "Agent" }] },
+          { "matcher": { "id": "byName", "options": "agent_source" }, "properties": [{ "id": "displayName", "value": "From" }] },
+          { "matcher": { "id": "byName", "options": "model" }, "properties": [{ "id": "displayName", "value": "Model" }] },
+          { "matcher": { "id": "byName", "options": "total_tokens" }, "properties": [{ "id": "displayName", "value": "Tokens" }] },
+          { "matcher": { "id": "byName", "options": "total_tool_uses" }, "properties": [{ "id": "displayName", "value": "Tools" }] },
+          { "matcher": { "id": "byName", "options": "duration_ms" }, "properties": [{ "id": "displayName", "value": "Duration" }, { "id": "unit", "value": "ms" }] }
+        ]
+      },
+      "options": { "showHeader": true, "sortBy": [{ "displayName": "Time", "desc": true }] }
+    },
+    {
+      "title": "Tools",
+      "gridPos": { "h": 7, "w": 12, "x": 12, "y": 27 },
+      "id": 40,
+      "type": "table",
+      "datasource": { "uid": "loki" },
+      "targets": [
+        {
+          "expr": "{service_name=\"claude-code\"} | session_id=\"$session_id\" | event_name=\"tool_result\"",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": [
+          { "matcher": { "id": "byRegexp", "options": "^(Time|line|detected_level|service_name|session_id|event_name|event_sequence|observed_timestamp|terminal_type|os_type|os_version|host_arch|environment|scope_name|scope_version|service_version|user_id|prompt_id|tool_use_id|tool_input_size_bytes|tool_result_size_bytes)$" }, "properties": [{ "id": "custom.hidden", "value": true }] },
+          { "matcher": { "id": "byName", "options": "event_timestamp" }, "properties": [{ "id": "displayName", "value": "Time" }] },
+          { "matcher": { "id": "byName", "options": "tool_name" }, "properties": [{ "id": "displayName", "value": "Tool" }] },
+          { "matcher": { "id": "byName", "options": "success" }, "properties": [{ "id": "displayName", "value": "OK" }] },
+          { "matcher": { "id": "byName", "options": "duration_ms" }, "properties": [{ "id": "displayName", "value": "Duration" }, { "id": "unit", "value": "ms" }] }
+        ]
+      },
+      "options": { "showHeader": true, "sortBy": [{ "displayName": "Time", "desc": true }] }
+    },
+
+    {
+      "title": "Hooks & Errors",
+      "type": "row",
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 34 },
+      "id": 203,
+      "collapsed": false,
+      "panels": []
+    },
+    {
+      "title": "Hooks",
+      "gridPos": { "h": 6, "w": 12, "x": 0, "y": 35 },
+      "id": 30,
+      "type": "table",
+      "datasource": { "uid": "loki" },
+      "targets": [
+        {
+          "expr": "{service_name=\"claude-code\"} | session_id=\"$session_id\" | event_name=\"hook_execution_complete\"",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": [
+          { "matcher": { "id": "byRegexp", "options": "^(Time|line|detected_level|service_name|session_id|event_name|event_sequence|observed_timestamp|terminal_type|os_type|os_version|host_arch|environment|scope_name|scope_version|service_version|user_id|prompt_id|managed_only|hook_source|num_hooks)$" }, "properties": [{ "id": "custom.hidden", "value": true }] },
+          { "matcher": { "id": "byName", "options": "event_timestamp" }, "properties": [{ "id": "displayName", "value": "Time" }] },
+          { "matcher": { "id": "byName", "options": "hook_event" }, "properties": [{ "id": "displayName", "value": "Trigger" }] },
+          { "matcher": { "id": "byName", "options": "hook_name" }, "properties": [{ "id": "displayName", "value": "Hook" }] },
+          { "matcher": { "id": "byName", "options": "num_success" }, "properties": [{ "id": "displayName", "value": "OK" }] },
+          { "matcher": { "id": "byName", "options": "num_blocking" }, "properties": [{ "id": "displayName", "value": "Blocked" }] },
+          { "matcher": { "id": "byName", "options": "num_non_blocking_error" }, "properties": [{ "id": "displayName", "value": "Errors" }] },
+          { "matcher": { "id": "byName", "options": "num_cancelled" }, "properties": [{ "id": "displayName", "value": "Cancelled" }] },
+          { "matcher": { "id": "byName", "options": "total_duration_ms" }, "properties": [{ "id": "displayName", "value": "Duration" }, { "id": "unit", "value": "ms" }] }
+        ]
+      },
+      "options": { "showHeader": true, "sortBy": [{ "displayName": "Time", "desc": true }] }
+    },
+    {
+      "title": "Errors",
+      "gridPos": { "h": 6, "w": 12, "x": 12, "y": 35 },
+      "id": 55,
+      "type": "table",
+      "datasource": { "uid": "loki" },
+      "targets": [
+        {
+          "expr": "{service_name=\"claude-code\"} | session_id=\"$session_id\" | event_name=~\"api_error|internal_error\"",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": [
+          { "matcher": { "id": "byRegexp", "options": "^(Time|line|detected_level|service_name|session_id|event_sequence|observed_timestamp|terminal_type|os_type|os_version|host_arch|environment|scope_name|scope_version|service_version|user_id|prompt_id)$" }, "properties": [{ "id": "custom.hidden", "value": true }] },
+          { "matcher": { "id": "byName", "options": "event_timestamp" }, "properties": [{ "id": "displayName", "value": "Time" }] },
+          { "matcher": { "id": "byName", "options": "event_name" }, "properties": [{ "id": "displayName", "value": "Type" }] },
+          { "matcher": { "id": "byName", "options": "model" }, "properties": [{ "id": "displayName", "value": "Model" }] },
+          { "matcher": { "id": "byName", "options": "status_code" }, "properties": [{ "id": "displayName", "value": "Status" }] },
+          { "matcher": { "id": "byName", "options": "error" }, "properties": [{ "id": "displayName", "value": "Error" }] },
+          { "matcher": { "id": "byName", "options": "error_name" }, "properties": [{ "id": "displayName", "value": "Code" }] }
+        ]
+      },
+      "options": { "showHeader": true, "sortBy": [{ "displayName": "Time", "desc": true }] }
+    },
+
+    {
+      "title": "Event Log",
+      "type": "row",
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 41 },
+      "id": 204,
+      "collapsed": false,
+      "panels": []
+    },
+    {
+      "title": "Event Log",
+      "gridPos": { "h": 10, "w": 24, "x": 0, "y": 42 },
+      "id": 60,
+      "type": "logs",
+      "datasource": { "uid": "loki" },
+      "targets": [
+        {
+          "expr": "{service_name=\"claude-code\"} | session_id=\"$session_id\" | label_format display=event_name | line_format \"{{.display}}\"",
+          "refId": "A"
+        }
+      ],
+      "options": { "showLabels": true, "showTime": true, "sortOrder": "Descending", "dedupStrategy": "none", "enableLogDetails": true }
+    }
+  ],
+  "refresh": "30s",
+  "schemaVersion": 39,
+  "tags": ["claude-code", "session-detail"],
+  "templating": {
+    "list": [
+      {
+        "name": "session_id",
+        "type": "query",
+        "label": "Session ID",
+        "datasource": { "uid": "prometheus" },
+        "refresh": 2,
+        "query": "label_values(claude_code_cost_usage_USD_total, session_id)",
+        "sort": 1,
+        "multi": false,
+        "includeAll": false,
+        "current": { "text": "", "value": "" }
+      }
+    ]
+  },
+  "time": { "from": "now-6h", "to": "now" },
+  "timepicker": {},
+  "timezone": "",
+  "title": "Claude Code Session Detail",
+  "uid": "claude-code-session",
+  "version": 4
+}

@@ -1,0 +1,177 @@
+/* ============================================================
+ * USS HUD Components — Visual states, transitions, rarity
+ * Source: design/ux/hud-visual-design.md sections 2-3
+ * ============================================================ */
+
+/* ---- Damage Percent Base Style ---- */
+.damage-percent {
+    font-family: var(--font-family);
+    font-weight: var(--font-weight-medium);
+    letter-spacing: var(--damage-letter-spacing);
+    line-height: var(--damage-line-height);
+    font-feature-settings: "tnum";        /* tabular-nums */
+    transition: color var(--anim-color-transition) ease-in-out;
+}
+
+/* ---- Damage Color Tiers ---- */
+.damage-percent.damage-low {
+    color: var(--damage-color-safe);
+}
+
+.damage-percent.damage-mid {
+    color: var(--damage-color-warn);
+}
+
+.damage-percent.damage-high {
+    color: var(--damage-color-danger);
+}
+
+.damage-percent.damage-critical {
+    color: var(--damage-color-critical);
+}
+
+/* ---- Damage Bounce Animation ---- */
+.damage-percent {
+    transition: color var(--anim-color-transition) ease-in-out,
+                scale var(--anim-damage-bounce) cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.damage-percent.bounce {
+    scale: var(--damage-bounce-scale);
+}
+
+/* ---- Red Flash for Critical (150%+) ---- */
+.damage-percent.critical-flash {
+    opacity: 0.3;
+}
+
+/* ---- Score Text ---- */
+.score-text {
+    font-family: var(--font-family);
+    font-weight: var(--font-weight-semibold);
+    letter-spacing: var(--score-letter-spacing);
+    line-height: var(--score-line-height);
+    font-feature-settings: "tnum";
+}
+
+/* ---- Round Text ---- */
+.round-text {
+    font-family: var(--font-family);
+    font-weight: var(--font-weight-regular);
+    letter-spacing: var(--round-letter-spacing);
+    line-height: var(--round-line-height);
+}
+
+/* ---- KO Notification ---- */
+.ko-notification {
+    font-family: var(--font-family);
+    font-weight: var(--font-weight-bold);
+    letter-spacing: var(--ko-letter-spacing);
+    line-height: var(--ko-line-height);
+    -unity-text-outline-width: 3px;
+    -unity-text-outline-color: var(--ko-outline-color);
+    transition: opacity 300ms cubic-bezier(0.55, 0.085, 0.68, 0.53);
+}
+
+/* ---- Key Hint ---- */
+.key-hint {
+    font-family: var(--font-family);
+    font-weight: var(--font-weight-medium);
+    letter-spacing: var(--key-hint-letter-spacing);
+    line-height: var(--key-hint-line-height);
+}
+
+/* ---- MAX Label ---- */
+.max-label {
+    font-family: var(--font-family);
+    font-weight: var(--font-weight-medium);
+    letter-spacing: var(--max-label-letter-spacing);
+    line-height: var(--max-label-line-height);
+}
+
+/* ---- Match Point ---- */
+.match-point {
+    font-family: var(--font-family);
+    font-weight: var(--font-weight-bold);
+}
+
+.match-point.visible {
+    display: DisplayStyle.Flex;
+}
+
+/* ---- Focus Fill Transitions ---- */
+.focus-fill {
+    transition: width 200ms ease-out,
+                background-color 100ms linear;
+}
+
+.focus-fill.pulse {
+    opacity: 0.85;
+}
+
+.focus-fill.maxed {
+    background-color: var(--focus-max-color);
+}
+
+/* ---- Skill Slot States ---- */
+.skill-slot {
+    transition: border-color 200ms linear;
+}
+
+.skill-slot.empty {
+    border-color: var(--color-empty-slot-outline);
+}
+
+.skill-slot.equipped {
+    /* border-color set by rarity class */
+}
+
+.skill-slot.interrupted {
+    border-color: var(--color-interrupt-flash);
+}
+
+.skill-slot.executing .skill-icon {
+    opacity: 1.0;
+}
+
+/* ---- Rarity Border Classes ---- */
+.skill-slot.rarity-common {
+    border-width: 1px;
+    border-color: var(--rarity-common-color);
+}
+
+.skill-slot.rarity-rare {
+    border-width: 2px;
+    border-color: var(--rarity-rare-color);
+    box-shadow: 0 0 3px rgba(155, 89, 182, 0.3);
+}
+
+.skill-slot.rarity-epic {
+    border-width: 3px;
+    border-color: var(--rarity-epic-color);
+    box-shadow: 0 0 5px rgba(240, 192, 64, 0.5);
+}
+
+/* ---- Skill Equip Animation ---- */
+.skill-slot .skill-icon {
+    transition: scale var(--anim-skill-equip) cubic-bezier(0.33, 1, 0.68, 1);
+}
+
+.skill-slot.equipping .skill-icon {
+    scale: 1.2;
+}
+
+/* ---- Focus Bar Player Color Override ---- */
+.player-info.p1 .focus-fill {
+    background-color: var(--player-color);
+}
+
+.player-info.p2 .focus-fill {
+    background-color: var(--player-color);
+}
+
+/* ---- P2 Mirroring (skill slots left of focus bar, damage rightmost) ---- */
+/* Layout order is handled in UXML; this is purely visual mirroring. */
+.player-info.p2 .damage-percent {
+    -unity-text-align: middle-right;
+}

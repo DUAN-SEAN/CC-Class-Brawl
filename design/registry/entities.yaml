@@ -1,0 +1,931 @@
+# Game World Entity Registry
+#
+# PURPOSE: Single source of truth for all named game-world facts that appear
+# in more than one document. Skills check this before writing new content to
+# detect cross-doc inconsistencies at authoring time.
+#
+# RULES:
+#   - Only register facts that cross system boundaries. Internal-only facts
+#     (a formula used in one GDD only) do NOT need to be registered.
+#   - Never delete entries — set status: deprecated instead.
+#   - When a value changes: update the value, set revised: to today's date,
+#     and add a comment with the old value and which GDD changed it.
+#   - source: is the authoritative GDD — the one that "owns" this fact.
+#     Other GDDs that reference it list themselves in referenced_by.
+#   - When a new GDD references an existing entry, append its path to
+#     referenced_by. Do not create a duplicate entry.
+#
+# WRITTEN BY: /design-system (Phase 5 — after GDD sections are approved)
+#             /consistency-check (when resolving conflicts)
+# READ BY:    /design-system (Phase 2 — before authoring begins, and after
+#               Section C/D writes to conflict-check new entities/formulas)
+#             /consistency-check (primary input — grep-first, GDD-second)
+#             /review-all-gdds (Phase 1 — baseline for Phase 2 checks)
+#             /architecture-review (data structure and interface validation)
+#
+# SEARCH PATTERNS (for skills using Grep):
+#   All entity names:        Grep pattern="^  - name:" path="design/registry/entities.yaml"
+#   Specific entity:         Grep pattern="  - name: goblin" path="design/registry/entities.yaml"
+#   All items:               Grep pattern="^  - name:" path="design/registry/entities.yaml" (items section)
+#   What combat.md owns:     Grep pattern="source: design/gdd/combat.md"
+#   What inventory.md uses:  Grep pattern="referenced_by.*inventory"
+#   All gold values:          Grep pattern="value_gold:"
+#   Deprecated entries:      Grep pattern="status: deprecated"
+#
+# FORMAT: YAML. Consistent indentation is critical for grep reliability.
+#   Sections: entities | items | formulas | constants
+#   Each entry: name, status, source, referenced_by[], attributes{}, added, revised
+
+version: 1
+last_updated: ""
+
+# ─── ENTITIES ────────────────────────────────────────────────────────────────
+# Named game-world objects: enemies, NPCs, characters, factions, bosses.
+# Register an entity here when it appears in more than one GDD — e.g., an
+# enemy defined in combat.md that also drops items listed in inventory.md.
+#
+# Required fields: name, status, source, referenced_by, added
+# Attribute fields: any key stats that could appear in another GDD
+#   (health, damage, drops, faction, etc.)
+
+entities:
+  - name: Warrior
+    status: active
+    source: design/gdd/class-system.md
+    referenced_by:
+      - design/gdd/class-system.md
+      - design/gdd/collision-system.md
+    body_type: Bulky
+    primary_color: "#E04030"
+    secondary_color: "#F08020"
+    silhouette_scale: 1.2
+    max_ground_speed: 3.8
+    role: "Heavy hitter — slow movement, long dash, high damage"
+    added: 2026-05-23
+    revised: ""
+
+  - name: Rogue
+    status: active
+    source: design/gdd/class-system.md
+    referenced_by:
+      - design/gdd/class-system.md
+      - design/gdd/collision-system.md
+    body_type: Slim
+    primary_color: "#6030A0"
+    secondary_color: "#203060"
+    silhouette_scale: 0.85
+    max_ground_speed: 6.5
+    role: "Speedster — fast movement, high jump, rapid combos"
+    added: 2026-05-23
+    revised: ""
+
+  - name: Mage
+    status: active
+    source: design/gdd/class-system.md
+    referenced_by:
+      - design/gdd/class-system.md
+      - design/gdd/collision-system.md
+    body_type: Flowing
+    primary_color: "#3080E0"
+    secondary_color: "#40D0D0"
+    silhouette_scale: 1.0
+    max_ground_speed: 4.8
+    role: "Ranged controller — medium stats, projectile attacks"
+    added: 2026-05-23
+    revised: ""
+
+  - name: CounterStrike
+    status: active
+    source: design/gdd/skill-database.md
+    referenced_by:
+      - design/gdd/skill-database.md
+    rarity: Common
+    class: universal
+    base_damage: 8.0
+    base_knockback: 10.0
+    startup_frames: 3
+    added: 2026-05-23
+    revised: ""
+
+  - name: SpinningKick
+    status: active
+    source: design/gdd/skill-database.md
+    referenced_by:
+      - design/gdd/skill-database.md
+    rarity: Common
+    class: universal
+    base_damage: 6.0
+    base_knockback: 5.0
+    startup_frames: 6
+    added: 2026-05-23
+    revised: ""
+
+  - name: DashStrike
+    status: active
+    source: design/gdd/skill-database.md
+    referenced_by:
+      - design/gdd/skill-database.md
+    rarity: Common
+    class: universal
+    base_damage: 5.0
+    base_knockback: 3.0
+    startup_frames: 4
+    added: 2026-05-23
+    revised: ""
+
+  - name: ShieldBash
+    status: active
+    source: design/gdd/skill-database.md
+    referenced_by:
+      - design/gdd/skill-database.md
+    rarity: Common
+    class: Warrior
+    base_damage: 8.0
+    base_knockback: 14.0
+    startup_frames: 6
+    added: 2026-05-23
+    revised: ""
+
+  - name: PowerStrike
+    status: active
+    source: design/gdd/skill-database.md
+    referenced_by:
+      - design/gdd/skill-database.md
+    rarity: Rare
+    class: Warrior
+    base_damage: 18.0
+    base_knockback: 15.0
+    startup_frames: 12
+    added: 2026-05-23
+    revised: ""
+
+  - name: DoubleSlash
+    status: active
+    source: design/gdd/skill-database.md
+    referenced_by:
+      - design/gdd/skill-database.md
+    rarity: Common
+    class: Rogue
+    base_damage: 9.0
+    base_knockback: 4.0
+    startup_frames: 3
+    added: 2026-05-23
+    revised: ""
+
+  - name: ShadowStep
+    status: active
+    source: design/gdd/skill-database.md
+    referenced_by:
+      - design/gdd/skill-database.md
+    rarity: Rare
+    class: Rogue
+    base_damage: 7.0
+    base_knockback: 6.0
+    startup_frames: 7
+    added: 2026-05-23
+    revised: ""
+
+  - name: IceArrow
+    status: active
+    source: design/gdd/skill-database.md
+    referenced_by:
+      - design/gdd/skill-database.md
+    rarity: Common
+    class: Mage
+    base_damage: 4.0
+    base_knockback: 2.0
+    is_projectile: true
+    projectile_speed: 12.0
+    added: 2026-05-23
+    revised: ""
+
+  - name: Fireball
+    status: active
+    source: design/gdd/skill-database.md
+    referenced_by:
+      - design/gdd/skill-database.md
+    rarity: Common
+    class: Mage
+    base_damage: 10.0
+    base_knockback: 6.0
+    is_projectile: true
+    projectile_speed: 7.0
+    added: 2026-05-23
+    revised: ""
+
+  - name: Meteor
+    status: active
+    source: design/gdd/skill-database.md
+    referenced_by:
+      - design/gdd/skill-database.md
+    rarity: Epic
+    class: universal
+    base_damage: 20.0
+    base_knockback: 18.0
+    startup_frames: 20
+    added: 2026-05-23
+    revised: ""
+
+# Example (remove when first real entry is added):
+#
+# entities:
+#   - name: goblin
+#     status: active              # active | deprecated
+#     source: design/gdd/combat.md
+#     referenced_by:
+#       - design/gdd/combat.md
+#       - design/gdd/inventory.md
+#     health: 40
+#     damage: 8
+#     drops:
+#       - item: goblin_arm        # must match an entry in items section
+#         qty: 1
+#         drop_rate: 0.8          # 0.0–1.0
+#     added: 2026-03-26
+#     revised: ""
+
+
+# ─── ITEMS ───────────────────────────────────────────────────────────────────
+# Named collectables, equipment, consumables, crafting materials, currency.
+# Register an item when its name or value appears in more than one GDD.
+#
+# Required fields: name, status, source, referenced_by, added
+# Attribute fields: value_gold, weight, stackable, category, and any stat
+#   modifiers that another system (e.g., economy, crafting) might reference.
+
+items: []
+
+# Example:
+#
+# items:
+#   - name: goblin_arm
+#     status: active
+#     source: design/gdd/combat.md   # drop defined in combat GDD
+#     referenced_by:
+#       - design/gdd/combat.md
+#       - design/gdd/inventory.md    # inventory GDD lists its weight/stack rules
+#       - design/gdd/economy.md      # economy GDD references its sell price
+#     value_gold: 5
+#     weight: 1
+#     stackable: true
+#     category: crafting_material
+#     added: 2026-03-26
+#     revised: ""
+
+
+# ─── FORMULAS ────────────────────────────────────────────────────────────────
+# Named calculations with defined variables and output ranges.
+# Register a formula when its output feeds into another system's input,
+# or when another GDD references it by name.
+#
+# Required fields: name, status, source, referenced_by, variables[],
+#   output_range[min, max], added
+# Optional: expression (the actual formula), notes
+
+formulas:
+  - name: damage_percent_update
+    status: active
+    source: design/gdd/damage-calculation-system.md
+    referenced_by:
+      - design/gdd/damage-calculation-system.md
+    variables:
+      - TargetDamagePercent_old
+      - BaseDamage
+    output_range: [0.0, 999.0+]
+    expression: "TargetDamagePercent_new = TargetDamagePercent_old + BaseDamage"
+    notes: "Simple additive damage accumulation. Output feeds into knockback formula and HUD display."
+    added: 2026-05-23
+    revised: ""
+
+  - name: knockback_magnitude
+    status: active
+    source: design/gdd/damage-calculation-system.md
+    referenced_by:
+      - design/gdd/damage-calculation-system.md
+      - design/gdd/knockback-launch-system.md
+    variables:
+      - BaseKnockback
+      - TargetDamagePercent
+      - BaseKnockbackGrowth
+    output_range: [BaseKnockback, 50+]
+    expression: "KnockbackMagnitude = BaseKnockbackGrowth × (TargetDamagePercent / 100) × BaseKnockback + BaseKnockback"
+    notes: "Knockback scales with target's damage percentage. At 0% knockback equals BaseKnockback. Output feeds into knockback system and FSM state transition."
+    added: 2026-05-23
+    revised: ""
+
+  - name: display_percent_rounding
+    status: active
+    source: design/gdd/damage-calculation-system.md
+    referenced_by:
+      - design/gdd/damage-calculation-system.md
+    variables:
+      - TargetDamagePercent
+    output_range: [0, 999]
+    expression: "DisplayPercent = Floor(TargetDamagePercent)"
+    notes: "Display-only rounding for HUD. Internal precision is float."
+    added: 2026-05-23
+    revised: ""
+
+  - name: knockback_vector
+    status: active
+    source: design/gdd/knockback-launch-system.md
+    referenced_by:
+      - design/gdd/knockback-launch-system.md
+    variables:
+      - KnockbackMagnitude
+      - KnockbackLaunchRatio
+      - KnockbackSpeedMultiplier
+      - horizontalDir
+    output_range: [1.0, 35+]
+    expression: "KnockbackVector = normalize(Vector2(horizontalDir, KnockbackLaunchRatio)) × KnockbackMagnitude × KnockbackSpeedMultiplier"
+    notes: "Converts scalar knockback magnitude to directional velocity vector. Output feeds into 3C SetVelocity."
+    added: 2026-05-23
+    revised: ""
+
+  - name: hitstun_velocity_update
+    status: active
+    source: design/gdd/knockback-launch-system.md
+    referenced_by:
+      - design/gdd/knockback-launch-system.md
+    variables:
+      - Vx
+      - Vy
+      - KnockbackDecayRate
+      - Gravity
+      - TerminalVelocity
+    output_range: "Vx decays toward 0; Vy clamped to [-TerminalVelocity, +inf]"
+    expression: "Vx_new = Vx × KnockbackDecayRate; Vy_new = Max(Vy - Gravity × dt, -TerminalVelocity)"
+    notes: "Per-frame velocity update during knockback hitstun period. Gravity and decay applied independently."
+    added: 2026-05-23
+    revised: ""
+
+  - name: recovery_velocity_update
+    status: active
+    source: design/gdd/knockback-launch-system.md
+    referenced_by:
+      - design/gdd/knockback-launch-system.md
+    variables:
+      - Vx
+      - MaxAirSpeed
+      - KnockbackRecoveryRate
+    output_range: "[0, MaxAirSpeed] after recovery completes"
+    expression: "if |Vx| > MaxAirSpeed: Vx × KnockbackRecoveryRate; else: 3C air control"
+    notes: "Post-hitstun velocity decay until within 3C MaxAirSpeed. Faster decay than hitstun period."
+    added: 2026-05-23
+    revised: ""
+
+  - name: blast_zone_ko_check
+    status: active
+    source: design/gdd/knockback-launch-system.md
+    referenced_by:
+      - design/gdd/knockback-launch-system.md
+    variables:
+      - position_x
+      - position_y
+      - BlastLeft
+      - BlastRight
+      - BlastTop
+      - BlastBottom
+    output_range: [false, true]
+    expression: "IsKO = (position.x < BlastLeft) OR (position.x > BlastRight) OR (position.y < BlastBottom) OR (position.y > BlastTop)"
+    notes: "Strict inequality — on boundary does not trigger KO. Checked every frame during knockback and recovery."
+    added: 2026-05-23
+    revised: ""
+
+  - name: focus_gain_attacker
+    status: active
+    source: design/gdd/focus-system.md
+    referenced_by:
+      - design/gdd/focus-system.md
+    variables:
+      - BaseDamage
+      - FocusGainRate_Attacker
+    output_range: [0.9, 4.5]
+    expression: "FocusGain_Attacker = BaseDamage × FocusGainRate_Attacker"
+    notes: "Attacker focus gain per hit. Output feeds into focus_update_and_unlock."
+    added: 2026-05-23
+    revised: ""
+
+  - name: focus_gain_defender
+    status: active
+    source: design/gdd/focus-system.md
+    referenced_by:
+      - design/gdd/focus-system.md
+    variables:
+      - BaseDamage
+      - FocusGainRate_Defender
+    output_range: [0.3, 1.5]
+    expression: "FocusGain_Defender = BaseDamage × FocusGainRate_Defender"
+    notes: "Defender focus compensation per hit received. ~1/3 of attacker rate."
+    added: 2026-05-23
+    revised: ""
+
+  - name: unlock_threshold
+    status: active
+    source: design/gdd/focus-system.md
+    referenced_by:
+      - design/gdd/focus-system.md
+    variables:
+      - FocusBaseThreshold
+      - FocusThresholdGrowth
+      - n
+    output_range: [40.0, 55.0]
+    expression: "UnlockThreshold_n = FocusBaseThreshold + (n × FocusThresholdGrowth)"
+    notes: "Increasing unlock threshold per skill unlock. n = number of skills already unlocked this match."
+    added: 2026-05-23
+    revised: ""
+
+  - name: focus_update_and_unlock
+    status: active
+    source: design/gdd/focus-system.md
+    referenced_by:
+      - design/gdd/focus-system.md
+      - design/gdd/skill-draw-system.md
+    variables:
+      - FocusPoints_old
+      - FocusGain
+      - FocusCap
+      - UnlockThreshold_n
+      - UnlockedCount
+      - MaxSkillsPerMatch
+    output_range: "[0.0, FocusCap] for FocusPoints; [0, MaxSkillsPerMatch] for UnlockedCount"
+    expression: "FocusPoints_new = Min(FocusPoints_old + FocusGain, FocusCap); if >= Threshold and < Max: trigger unlock, subtract threshold"
+    notes: "Core focus update logic. Triggers OnFocusReady when threshold reached. Output feeds into skill-draw-system and HUD."
+    added: 2026-05-23
+    revised: ""
+
+  - name: skill_draw_weight
+    status: active
+    source: design/gdd/skill-database.md
+    referenced_by:
+      - design/gdd/skill-database.md
+      - design/gdd/skill-draw-system.md
+    variables:
+      - RarityPoolWeight
+      - RarityPoolTotalWeight
+      - SkillRarityWeight
+    output_range: [0.0, 1.0]
+    expression: "SkillDrawWeight = (RarityPoolWeight / RarityPoolTotalWeight) × SkillRarityWeight"
+    notes: "Per-skill draw probability. RarityPoolWeight is the tier chance (Common=0.7, Rare=0.2, Epic=0.1). Used by skill-draw-system."
+    added: 2026-05-23
+    revised: ""
+
+  - name: pool_weight_recompute
+    status: active
+    source: design/gdd/skill-draw-system.md
+    referenced_by:
+      - design/gdd/skill-draw-system.md
+    variables:
+      - RarityPoolWeight
+      - RarityPoolCount_inPool
+      - SkillRarityWeight
+    output_range: [0.0, 1.0]
+    expression: "PoolWeight_i = (RarityPoolWeight / RarityPoolCount_inPool) × SkillRarityWeight; DrawWeight_i = PoolWeight_i / Sum(PoolWeight_j)"
+    notes: "Class-filtered pool weight recomputation. RarityPoolCount_inPool is the count of skills in that rarity tier within the class pool. Normalization handles empty tiers."
+    added: 2026-05-23
+    revised: ""
+
+  - name: candidate_selection
+    status: active
+    source: design/gdd/skill-draw-system.md
+    referenced_by:
+      - design/gdd/skill-draw-system.md
+    variables:
+      - EligiblePool
+      - PoolSize
+      - DrawWeight
+    output_range: "[1, 3] unique SkillData"
+    expression: "For k=1..min(3,PoolSize): P(skill_i) = DrawWeight_i / Sum(remaining); draw Candidate_k; remove from pool"
+    notes: "Weighted random without replacement. Generates 3 candidates for player selection. Degraded mode when PoolSize < 3."
+    added: 2026-05-23
+    revised: ""
+
+  - name: pool_exhaustion_check
+    status: active
+    source: design/gdd/skill-draw-system.md
+    referenced_by:
+      - design/gdd/skill-draw-system.md
+    variables:
+      - PoolSize
+    output_range: "[true, false]"
+    expression: "CanDraw = (PoolSize >= 1); CandidateCount = min(3, PoolSize)"
+    notes: "Determines if draw can proceed and how many candidates to show."
+    added: 2026-05-23
+    revised: ""
+
+  - name: remaining_pool_size
+    status: active
+    source: design/gdd/skill-draw-system.md
+    referenced_by:
+      - design/gdd/skill-draw-system.md
+    variables:
+      - InitialPoolSize
+      - n
+    output_range: "[0, InitialPoolSize]"
+    expression: "RemainingPoolSize_n = InitialPoolSize - n"
+    notes: "Tracks remaining skills in pool after n successful draws. n = UnlockedCount."
+    added: 2026-05-23
+    revised: ""
+
+  - name: wins_needed
+    status: active
+    source: design/gdd/match-management-system.md
+    referenced_by:
+      - design/gdd/match-management-system.md
+    variables:
+      - MatchFormat
+    output_range: [1, 3]
+    expression: "WinsNeeded = Ceil(MatchFormat / 2.0)"
+    notes: "Derives win threshold from match format. Bo1=1, Bo3=2, Bo5=3."
+    added: 2026-05-23
+    revised: ""
+
+  - name: match_over_check
+    status: active
+    source: design/gdd/match-management-system.md
+    referenced_by:
+      - design/gdd/match-management-system.md
+    variables:
+      - scores
+      - WinsNeeded
+    output_range: [false, true]
+    expression: "IsMatchOver = (scores[0] >= WinsNeeded) OR (scores[1] >= WinsNeeded)"
+    notes: "Checks if either player has won the match. Used after each round score update."
+    added: 2026-05-23
+    revised: ""
+
+  - name: draw_check
+    status: active
+    source: design/gdd/match-management-system.md
+    referenced_by:
+      - design/gdd/match-management-system.md
+    variables:
+      - scores
+      - WinsNeeded
+    output_range: [false, true]
+    expression: "IsDraw = (scores[0] >= WinsNeeded) AND (scores[1] >= WinsNeeded)"
+    notes: "Checks if both players simultaneously reached win threshold (double KO scenario)."
+    added: 2026-05-23
+    revised: ""
+
+  - name: max_rounds
+    status: active
+    source: design/gdd/match-management-system.md
+    referenced_by:
+      - design/gdd/match-management-system.md
+    variables:
+      - WinsNeeded
+    output_range: [1, 5]
+    expression: "MaxRounds = (WinsNeeded × 2) - 1"
+    notes: "Maximum rounds without double KO. Bo1=1, Bo3=3, Bo5=5."
+    added: 2026-05-23
+    revised: ""
+
+# Example:
+#
+# formulas:
+#   - name: damage_formula
+#     status: active
+#     source: design/gdd/combat.md
+#     referenced_by:
+#       - design/gdd/combat.md
+#       - design/gdd/progression.md   # progression GDD scales attack variable
+#     variables:
+#       - attack
+#       - defense
+#       - crit_chance
+#       - crit_multiplier
+#     output_range: [0, 999]
+#     expression: "max(0, attack - defense) * (1 + crit_chance * crit_multiplier)"
+#     notes: "Output feeds into health-system damage intake. Min is 0 (armour
+#       can absorb all damage). Max is uncapped in formula but tuning knob
+#       damage_cap in combat.md clamps at 999."
+#     added: 2026-03-26
+#     revised: ""
+
+
+# ─── CONSTANTS ───────────────────────────────────────────────────────────────
+# Named numerical values referenced across multiple systems.
+# Register a constant when it is defined in one GDD but another GDD must
+# agree with it (e.g., gold carry limit defined in economy but checked in
+# inventory, or base inventory slots defined in inventory but displayed in HUD).
+#
+# Required fields: name, status, source, referenced_by, value, unit, added
+
+constants:
+  - name: Warrior_MaxGroundSpeed
+    status: active
+    source: design/gdd/class-system.md
+    referenced_by:
+      - design/gdd/class-system.md
+    value: 3.8
+    unit: u/s
+    notes: "Warrior ground speed — slowest class. Safe range 3.0-5.0."
+    added: 2026-05-23
+    revised: ""
+
+  - name: Rogue_MaxGroundSpeed
+    status: active
+    source: design/gdd/class-system.md
+    referenced_by:
+      - design/gdd/class-system.md
+    value: 6.5
+    unit: u/s
+    notes: "Rogue ground speed — fastest class. Safe range 5.0-8.0."
+    added: 2026-05-23
+    revised: ""
+
+  - name: Mage_MaxGroundSpeed
+    status: active
+    source: design/gdd/class-system.md
+    referenced_by:
+      - design/gdd/class-system.md
+    value: 4.8
+    unit: u/s
+    notes: "Mage ground speed — middle class. Safe range 3.5-6.0."
+    added: 2026-05-23
+    revised: ""
+
+  - name: KnockbackThreshold
+    status: active
+    source: design/gdd/combat-state-machine.md
+    referenced_by:
+      - design/gdd/combat-state-machine.md
+      - design/gdd/damage-calculation-system.md
+      - design/gdd/knockback-launch-system.md
+      - design/gdd/skill-database.md
+    value: 9.0
+    unit: knockback_magnitude
+    notes: "Recalibrated from 5.0 to 9.0 by knockback-launch-system GDD. At 9.0: Warrior always triggers knockback, Rogue jabs never do, creating clear class identity differentiation."
+    added: 2026-05-23
+    revised: "2026-05-23"
+
+  - name: InputBufferFrames
+    status: active
+    source: design/gdd/combat-state-machine.md
+    referenced_by:
+      - design/gdd/combat-state-machine.md
+    value: 8
+    unit: frames
+    notes: "Attack input buffer window at 60Hz. 8 frames ≈ 133ms."
+    added: 2026-05-23
+    revised: ""
+
+  - name: KnockbackHitstunGrowth
+    status: active
+    source: design/gdd/combat-state-machine.md
+    referenced_by:
+      - design/gdd/combat-state-machine.md
+    value: 0.5
+    unit: frames_per_magnitude
+    notes: "Linear growth coefficient for knockback hitstun duration."
+    added: 2026-05-23
+    revised: ""
+
+  - name: KnockbackHitstunCap
+    status: active
+    source: design/gdd/combat-state-machine.md
+    referenced_by:
+      - design/gdd/combat-state-machine.md
+    value: 50
+    unit: frames
+    notes: "Maximum hitstun frames during knockback state."
+    added: 2026-05-23
+    revised: ""
+
+  - name: BaseKnockbackHitstun
+    status: active
+    source: design/gdd/combat-state-machine.md
+    referenced_by:
+      - design/gdd/combat-state-machine.md
+    value: 3
+    unit: frames
+    notes: "Minimum hitstun frames for the lightest knockback."
+    added: 2026-05-23
+    revised: ""
+
+  - name: HurtboxBaseSize
+    status: active
+    source: design/gdd/collision-system.md
+    referenced_by:
+      - design/gdd/collision-system.md
+    value: "(0.6, 1.0)"
+    unit: u
+    notes: "Base hurtbox dimensions (width × height) for all characters. Scaled by SilhouetteScale per class."
+    added: 2026-05-23
+    revised: ""
+
+  - name: BaseKnockbackGrowth
+    status: active
+    source: design/gdd/damage-calculation-system.md
+    referenced_by:
+      - design/gdd/damage-calculation-system.md
+      - design/gdd/knockback-launch-system.md
+    value: 0.05
+    unit: coefficient
+    notes: "Per-1% damage growth coefficient for knockback magnitude. Safe range 0.01-0.15. Higher = faster KO at high %."
+    added: 2026-05-23
+    revised: ""
+
+  - name: KnockbackSpeedMultiplier
+    status: active
+    source: design/gdd/knockback-launch-system.md
+    referenced_by:
+      - design/gdd/knockback-launch-system.md
+    value: 2.0
+    unit: multiplier
+    notes: "Converts unitless KnockbackMagnitude to velocity (u/s). Safe range 1.0-3.0. Higher = faster knockback, easier KO."
+    added: 2026-05-23
+    revised: ""
+
+  - name: KnockbackLaunchRatio
+    status: active
+    source: design/gdd/knockback-launch-system.md
+    referenced_by:
+      - design/gdd/knockback-launch-system.md
+    value: 1.0
+    unit: ratio
+    notes: "Controls knockback launch angle. 1.0=45deg, 0.5=~27deg, 2.0=~63deg. Higher = more vertical, lower = more horizontal."
+    added: 2026-05-23
+    revised: ""
+
+  - name: KnockbackDecayRate
+    status: active
+    source: design/gdd/knockback-launch-system.md
+    referenced_by:
+      - design/gdd/knockback-launch-system.md
+    value: 0.99
+    unit: per_frame
+    notes: "Per-frame horizontal velocity multiplier during hitstun. 0.99 = 1% decay per frame. Safe range 0.95-0.995."
+    added: 2026-05-23
+    revised: ""
+
+  - name: KnockbackRecoveryRate
+    status: active
+    source: design/gdd/knockback-launch-system.md
+    referenced_by:
+      - design/gdd/knockback-launch-system.md
+    value: 0.92
+    unit: per_frame
+    notes: "Per-frame horizontal velocity multiplier during recovery (post-hitstun). Faster than hitstun decay. Safe range 0.85-0.95."
+    added: 2026-05-23
+    revised: ""
+
+  - name: FocusGainRate_Attacker
+    status: active
+    source: design/gdd/focus-system.md
+    referenced_by:
+      - design/gdd/focus-system.md
+    value: 0.30
+    unit: focus_per_damage
+    notes: "Focus gained per point of BaseDamage dealt. Safe range 0.20-0.40. Higher = faster unlocks."
+    added: 2026-05-23
+    revised: ""
+
+  - name: FocusGainRate_Defender
+    status: active
+    source: design/gdd/focus-system.md
+    referenced_by:
+      - design/gdd/focus-system.md
+    value: 0.10
+    unit: focus_per_damage
+    notes: "Focus compensation per point of BaseDamage received. ~1/3 of attacker rate. Safe range 0.05-0.15."
+    added: 2026-05-23
+    revised: ""
+
+  - name: FocusBaseThreshold
+    status: active
+    source: design/gdd/focus-system.md
+    referenced_by:
+      - design/gdd/focus-system.md
+    value: 40.0
+    unit: focus_points
+    notes: "Focus required for first skill unlock. Subsequent unlocks add FocusThresholdGrowth. Safe range 20.0-60.0."
+    added: 2026-05-23
+    revised: ""
+
+  - name: FocusThresholdGrowth
+    status: active
+    source: design/gdd/focus-system.md
+    referenced_by:
+      - design/gdd/focus-system.md
+    value: 5.0
+    unit: focus_points
+    notes: "Focus threshold increase per unlock. Safe range 3.0-10.0. All 4 thresholds must remain <= FocusCap."
+    added: 2026-05-23
+    revised: ""
+
+  - name: FocusCap
+    status: active
+    source: design/gdd/focus-system.md
+    referenced_by:
+      - design/gdd/focus-system.md
+    value: 55.0
+    unit: focus_points
+    notes: "Maximum focus points a player can hold. Must be >= highest unlock threshold (40+3×5=55). Safe range 45.0-65.0."
+    added: 2026-05-23
+    revised: ""
+
+  - name: MaxSkillsPerMatch
+    status: active
+    source: design/gdd/focus-system.md
+    referenced_by:
+      - design/gdd/focus-system.md
+      - design/gdd/skill-database.md
+      - design/gdd/skill-draw-system.md
+      - design/gdd/skill-equipment-management.md
+    unit: skills
+    notes: "Maximum random skills unlockable per match. Safe range 2-6. Higher = more chaos."
+    added: 2026-05-23
+    revised: ""
+
+  - name: CommonPoolWeight
+    status: active
+    source: design/gdd/skill-database.md
+    referenced_by:
+      - design/gdd/skill-database.md
+      - design/gdd/skill-draw-system.md
+    value: 0.70
+    unit: probability
+    notes: "Chance of drawing a Common skill. Safe range 0.40-0.85. Sum with Rare+Epic must = 1.0."
+    added: 2026-05-23
+    revised: ""
+
+  - name: RarePoolWeight
+    status: active
+    source: design/gdd/skill-database.md
+    referenced_by:
+      - design/gdd/skill-database.md
+      - design/gdd/skill-draw-system.md
+    value: 0.20
+    unit: probability
+    notes: "Chance of drawing a Rare skill. Safe range 0.10-0.40."
+    added: 2026-05-23
+    revised: ""
+
+  - name: EpicPoolWeight
+    status: active
+    source: design/gdd/skill-database.md
+    referenced_by:
+      - design/gdd/skill-database.md
+      - design/gdd/skill-draw-system.md
+    value: 0.10
+    unit: probability
+    notes: "Chance of drawing an Epic skill. Safe range 0.05-0.20."
+    added: 2026-05-23
+    revised: ""
+
+  - name: CandidateCount
+    status: active
+    source: design/gdd/skill-draw-system.md
+    referenced_by:
+      - design/gdd/skill-draw-system.md
+    value: 3
+    unit: skills
+    notes: "Number of skill candidates presented to player per draw. Safe range 2-4."
+    added: 2026-05-23
+    revised: ""
+
+  - name: SelectionTimeout
+    status: active
+    source: design/gdd/skill-draw-system.md
+    referenced_by:
+      - design/gdd/skill-draw-system.md
+    value: 5.0
+    unit: seconds
+    notes: "Time limit for player skill selection. Auto-selects first candidate on timeout. Safe range 2.0-10.0."
+    added: 2026-05-23
+    revised: ""
+
+  - name: SkillSlotCount
+    status: active
+    source: design/gdd/skill-equipment-management.md
+    referenced_by:
+      - design/gdd/skill-equipment-management.md
+    value: 4
+    unit: slots
+    notes: "Number of skill slots per character. Must equal MaxSkillsPerMatch. Safe range 2-6."
+    added: 2026-05-23
+    revised: ""
+
+  - name: InterRoundDuration
+    status: active
+    source: design/gdd/match-management-system.md
+    referenced_by:
+      - design/gdd/match-management-system.md
+    value: 2.5
+    unit: seconds
+    notes: "Duration of inter-round results screen. Players can skip. Safe range 1.0-5.0."
+    added: 2026-05-23
+    revised: ""
+
+  - name: DefaultMatchFormat
+    status: active
+    source: design/gdd/match-management-system.md
+    referenced_by:
+      - design/gdd/match-management-system.md
+    value: 3
+    unit: format
+    notes: "Default match format (Bo1=1, Bo3=3, Bo5=5). Safe range {1, 3, 5}."
+    added: 2026-05-23
+    revised: ""

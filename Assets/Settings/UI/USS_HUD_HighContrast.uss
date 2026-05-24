@@ -1,0 +1,63 @@
+/* ============================================================
+ * USS HUD High Contrast Override
+ * Source: design/ux/hud-visual-design.md section 2.7
+ * Applied when high-contrast accessibility mode is enabled.
+ * ============================================================ */
+
+.hud-root.high-contrast {
+    /* Global overrides applied via parent class */
+}
+
+/* ---- Damage Percent: 56px -> 84px, enhanced colors ---- */
+.hud-root.high-contrast .damage-percent {
+    font-size: 84px;
+    line-height: 118px;
+}
+
+.hud-root.high-contrast .damage-percent.damage-high {
+    color: rgb(255, 170, 64);             /* #FFAA40 (brightened orange) */
+}
+
+.hud-root.high-contrast .damage-percent.damage-critical {
+    color: rgb(255, 64, 64);              /* #FF4040 (brightened red) */
+}
+
+/* ---- Panel Background: darker, more opaque ---- */
+.hud-root.high-contrast .player-info {
+    background-color: rgba(0, 0, 0, 0.95);
+}
+
+.hud-root.high-contrast .score-area {
+    background-color: rgba(0, 0, 0, 0.9);
+}
+
+/* ---- Focus Bar Track: darker for contrast ---- */
+.hud-root.high-contrast .focus-bar {
+    background-color: rgb(26, 26, 26);
+}
+
+/* ---- Key Hint: white ---- */
+.hud-root.high-contrast .key-hint {
+    color: rgb(255, 255, 255);
+}
+
+/* ---- Empty Slot Outline: brighter ---- */
+.hud-root.high-contrast .skill-slot.empty {
+    border-color: rgb(136, 136, 136);     /* #888888 */
+}
+
+/* ---- Borders: all doubled ---- */
+.hud-root.high-contrast .skill-slot {
+    border-width: 2px;
+}
+
+.hud-root.high-contrast .score-area {
+    border-width: 2px;
+}
+
+/* ---- KO Notification: larger, thicker outline ---- */
+.hud-root.high-contrast .ko-notification {
+    font-size: 120px;
+    line-height: 168px;
+    -unity-text-outline-width: 6px;
+}

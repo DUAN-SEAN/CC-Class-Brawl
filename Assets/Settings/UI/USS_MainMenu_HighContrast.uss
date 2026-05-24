@@ -1,0 +1,43 @@
+/* ============================================================
+ * USS Main Menu High Contrast Mode
+ * Source: design/ux/main-menu-visual-design.md section 2.4
+ * Activated by adding "high-contrast" class to menu root.
+ * ============================================================ */
+
+.high-contrast .title-cn {
+    color: rgba(255, 255, 255, 0.40);
+}
+
+.high-contrast .title-en {
+    color: rgba(255, 255, 255, 0.35);
+}
+
+.high-contrast .version-text,
+.high-contrast .copyright-text {
+    color: rgb(102, 102, 102);
+}
+
+.high-contrast .dialog-overlay {
+    background-color: rgba(0, 0, 0, 0.80);
+}
+
+.high-contrast .top-bar-btn {
+    background-color: rgb(26, 26, 46);
+}
+
+.high-contrast .dialog-btn {
+    background-color: rgb(26, 26, 46);
+}
+
+.high-contrast .pulse-stopped {
+    border-color: rgba(240, 192, 64, 0.70);
+}
+
+.high-contrast .top-bar-btn:focus,
+.high-contrast .dialog-btn:focus {
+    border-width: 4px;
+}
+
+.high-contrast .cta-button {
+    border-width: 5px;
+}

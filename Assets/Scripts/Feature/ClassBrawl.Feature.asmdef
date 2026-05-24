@@ -1,0 +1,1 @@
+{"name":"ClassBrawl.Feature","rootNamespace":"ClassBrawl.Feature","references":["ClassBrawl.Foundation","ClassBrawl.Core"],"includePlatforms":[],"excludePlatforms":[],"allowUnsafeCode":false,"overrideReferences":false,"precompiledReferences":[],"autoReferenced":true,"defineConstraints":[],"versionDefines":[],"noEngineReferences":false}

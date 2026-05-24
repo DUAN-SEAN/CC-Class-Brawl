@@ -1,0 +1,124 @@
+/* ============================================================
+ * USS Main Menu Theme — CSS Custom Properties (Design Tokens)
+ * Source: design/ux/main-menu-visual-design.md sections 1-2
+ * Base Resolution: 1920x1080
+ * ============================================================ */
+
+:root {
+    /* ---- Typography (section 1.2) ---- */
+    --font-family: "Exo 2", "Noto Sans SC", sans-serif;
+    --font-weight-medium: 500;
+    --font-weight-semibold: 600;
+    --font-weight-regular: 400;
+
+    /* CTA main text: "start_battle" */
+    --cta-main-font-size: 36px;
+    --cta-main-letter-spacing: 1.8px;       /* 5% of 36px */
+    --cta-main-line-height: 50px;           /* 140% of 36px */
+
+    /* CTA sub text: "press_a_start" */
+    --cta-sub-font-size: 14px;
+    --cta-sub-letter-spacing: 0.6px;        /* 4% of 14px */
+    --cta-sub-line-height: 20px;            /* 140% of 14px */
+
+    /* Title CN: "title_cn" */
+    --title-cn-font-size: 72px;
+    --title-cn-letter-spacing: 3.6px;       /* 5% of 72px */
+    --title-cn-line-height: 101px;          /* 140% of 72px */
+
+    /* Title EN: "CLASS BRAWL" */
+    --title-en-font-size: 24px;
+    --title-en-letter-spacing: 1.2px;       /* 5% of 24px */
+    --title-en-line-height: 34px;           /* 140% of 24px */
+
+    /* Top bar buttons */
+    --topbar-font-size: 14px;
+    --topbar-letter-spacing: 0.6px;         /* 4% of 14px */
+    --topbar-line-height: 20px;             /* 140% of 14px */
+
+    /* Version / copyright */
+    --footer-font-size: 12px;
+    --footer-letter-spacing: 0.5px;         /* 4% of 12px */
+    --footer-line-height: 17px;             /* 140% of 12px */
+
+    /* Dialog title */
+    --dialog-title-font-size: 20px;
+    --dialog-title-letter-spacing: 1.0px;   /* 5% of 20px */
+    --dialog-title-line-height: 28px;       /* 140% of 20px */
+
+    /* Dialog buttons */
+    --dialog-btn-font-size: 16px;
+    --dialog-btn-letter-spacing: 0.7px;     /* 4% of 16px */
+    --dialog-btn-line-height: 22px;         /* 140% of 16px */
+
+    /* ---- Core Colors (section 2.1) ---- */
+    --color-abyss: rgb(26, 26, 46);                 /* #1A1A2E */
+    --color-warm-variant: rgba(34, 34, 64, 0.85);   /* #222240 85% */
+    --color-icon-plate: rgb(42, 42, 62);            /* #2A2A3E */
+    --color-ui-neutral: rgb(58, 58, 92);            /* #3A3A5C */
+    --color-text-main: rgb(232, 232, 240);          /* #E8E8F0 */
+    --color-text-emphasis: rgb(255, 255, 255);      /* #FFFFFF */
+    --color-gold: rgb(240, 192, 64);                /* #F0C040 */
+
+    /* ---- Semantic Colors (section 2.2) ---- */
+    --cta-bg-color: rgb(255, 255, 255);              /* #FFFFFF */
+    --cta-text-color: rgb(26, 26, 46);               /* #1A1A2E on white bg */
+    --cta-sub-text-color: rgb(58, 58, 92);           /* #3A3A5C on white bg */
+    --cta-border-color: rgb(240, 192, 64);           /* #F0C040 gold */
+    --cta-border-opacity-min: 0.4;
+    --cta-border-opacity-max: 1.0;
+
+    --topbar-btn-bg: rgb(42, 42, 62);                /* #2A2A3E */
+    --topbar-btn-text: rgb(232, 232, 240);           /* #E8E8F0 */
+    --topbar-focus-border: rgb(240, 192, 64);        /* #F0C040 */
+    --topbar-focus-text: rgb(255, 255, 255);         /* #FFFFFF */
+
+    --title-cn-color: rgba(255, 255, 255, 0.20);     /* #FFFFFF 20% */
+    --title-en-color: rgba(255, 255, 255, 0.15);     /* #FFFFFF 15% */
+
+    --version-color: rgb(58, 58, 92);                /* #3A3A5C */
+
+    --dialog-overlay-color: rgba(26, 26, 46, 0.60);  /* #1A1A2E 60% */
+    --dialog-panel-bg: rgba(34, 34, 64, 0.85);       /* #222240 85% */
+    --dialog-border-color: rgba(58, 58, 92, 0.60);   /* #3A3A5C 60% */
+    --dialog-btn-bg: rgb(42, 42, 62);                /* #2A2A3E */
+
+    /* ---- Deco Line ---- */
+    --deco-line-color: rgba(58, 58, 92, 0.30);       /* #3A3A5C 30% */
+
+    /* ---- Sizing ---- */
+    --cta-width: 320px;
+    --cta-height: 80px;
+    --cta-border-radius: 8px;
+    --cta-border-width: 3px;
+
+    --topbar-btn-padding-h: 12px;
+    --topbar-btn-padding-v: 8px;
+    --topbar-btn-border-radius: 6px;
+    --topbar-btn-gap: 12px;
+
+    --dialog-width: 480px;
+    --dialog-min-height: 200px;
+    --dialog-border-radius: 8px;
+    --dialog-padding: 32px;
+
+    --dialog-btn-width: 120px;
+    --dialog-btn-height: 40px;
+    --dialog-btn-border-radius: 6px;
+
+    --footer-safe-margin: 24px;
+    --topbar-top-margin: 24px;
+    --topbar-left-margin: 24px;
+
+    /* ---- Animation Durations (section 5.2) ---- */
+    --anim-screen-fade-in: 800ms;
+    --anim-screen-fade-out: 400ms;
+    --anim-element-stagger: 150ms;
+    --anim-dialog-appear: 200ms;
+    --anim-dialog-close: 150ms;
+    --anim-focus-indicator: 100ms;
+    --anim-press-down: 50ms;
+    --anim-press-release: 100ms;
+    --anim-cta-pulse-period: 2000ms;
+    --anim-color-transition: 150ms;
+}

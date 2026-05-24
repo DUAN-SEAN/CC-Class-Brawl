@@ -1,0 +1,115 @@
+/* ============================================================
+ * USS Main Menu Theme — CSS Custom Properties (Design Tokens)
+ * Source: design/ux/main-menu-visual-design.md
+ * Base Resolution: 1920x1080
+ *
+ * Self-contained: all values hardcoded, no dependency on
+ * USS_HUD_Theme.uss (different scenes, never loaded together).
+ * ============================================================ */
+
+:root {
+    /* ---- Typography ---- */
+    --font-family: "Exo 2", "Noto Sans SC", sans-serif;
+    --font-weight-regular: 400;
+    --font-weight-medium: 500;
+    --font-weight-semibold: 600;
+
+    --mm-cta-font-size: 36px;
+    --mm-cta-letter-spacing: 1.8px;
+    --mm-cta-line-height: 50px;
+
+    --mm-cta-hint-font-size: 14px;
+    --mm-cta-hint-letter-spacing: 0.6px;
+    --mm-cta-hint-line-height: 20px;
+
+    --mm-title-cn-font-size: 72px;
+    --mm-title-cn-letter-spacing: 3.6px;
+    --mm-title-cn-line-height: 101px;
+
+    --mm-title-en-font-size: 24px;
+    --mm-title-en-letter-spacing: 1.2px;
+    --mm-title-en-line-height: 34px;
+
+    --mm-topbar-btn-font-size: 14px;
+    --mm-topbar-btn-letter-spacing: 0.6px;
+    --mm-topbar-btn-line-height: 20px;
+
+    --mm-version-font-size: 12px;
+    --mm-version-letter-spacing: 0.5px;
+    --mm-version-line-height: 17px;
+
+    --mm-modal-title-font-size: 20px;
+    --mm-modal-title-letter-spacing: 1.0px;
+    --mm-modal-title-line-height: 28px;
+
+    --mm-modal-btn-font-size: 16px;
+    --mm-modal-btn-letter-spacing: 0.7px;
+    --mm-modal-btn-line-height: 22px;
+
+    /* ---- CTA Button ---- */
+    --mm-cta-width: 320px;
+    --mm-cta-height: 80px;
+    --mm-cta-bg: rgb(255, 255, 255);
+    --mm-cta-border-radius: 8px;
+    --mm-cta-border-color: rgb(240, 192, 64);
+    --mm-cta-border-width: 3px;
+    --mm-cta-text-color: rgb(26, 26, 46);
+    --mm-cta-hint-color: rgb(42, 42, 62);
+    --mm-cta-padding-top: 18px;
+    --mm-cta-padding-bottom: 12px;
+    --mm-cta-padding-h: 20px;
+
+    /* ---- Top Bar Buttons ---- */
+    --mm-topbar-btn-bg: rgb(42, 42, 62);
+    --mm-topbar-btn-border-radius: 6px;
+    --mm-topbar-btn-padding-h: 12px;
+    --mm-topbar-btn-padding-v: 8px;
+    --mm-topbar-btn-gap: 12px;
+    --mm-topbar-btn-text-color: rgb(232, 232, 240);
+    --mm-topbar-btn-text-color-focused: rgb(255, 255, 255);
+    --mm-topbar-focus-border-color: rgb(240, 192, 64);
+    --mm-topbar-focus-border-width: 2px;
+    --mm-topbar-margin-left: 24px;
+    --mm-topbar-margin-top: 24px;
+
+    /* ---- Title ---- */
+    --mm-title-cn-color: rgba(255, 255, 255, 0.20);
+    --mm-title-en-color: rgba(255, 255, 255, 0.15);
+    --mm-title-line-color: rgba(58, 58, 92, 0.30);
+    --mm-title-line-width: 60px;
+    --mm-title-line-height: 1px;
+    --mm-title-gap: 12px;
+
+    /* ---- Version ---- */
+    --mm-version-color: rgb(58, 58, 92);
+    --mm-version-margin: 24px;
+
+    /* ---- Modal / Popup ---- */
+    --mm-modal-width: 480px;
+    --mm-modal-min-height: 200px;
+    --mm-modal-bg: rgba(34, 34, 64, 0.85);
+    --mm-modal-border-radius: 8px;
+    --mm-modal-border-color: rgba(58, 58, 92, 0.60);
+    --mm-modal-border-width: 1px;
+    --mm-modal-padding: 32px;
+    --mm-modal-overlay-color: rgba(26, 26, 46, 0.60);
+    --mm-modal-title-color: rgb(255, 255, 255);
+    --mm-modal-btn-bg: rgb(42, 42, 62);
+    --mm-modal-btn-border-radius: 6px;
+    --mm-modal-btn-width: 120px;
+    --mm-modal-btn-height: 40px;
+    --mm-modal-btn-text-color: rgb(232, 232, 240);
+    --mm-modal-btn-focus-border-color: rgb(240, 192, 64);
+    --mm-modal-btn-focus-border-width: 2px;
+    --mm-modal-btn-gap: 16px;
+
+    /* ---- Background ---- */
+    --mm-bg-color: rgb(26, 26, 46);
+
+    /* ---- Animation Durations ---- */
+    --mm-anim-focus-transition: 100ms;
+
+    /* ---- Layout ---- */
+    --mm-safe-margin: 24px;
+    --mm-bottom-margin: 20px;
+}

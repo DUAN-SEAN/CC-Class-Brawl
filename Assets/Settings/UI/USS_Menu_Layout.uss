@@ -1,0 +1,213 @@
+/* ============================================================
+ * USS Main Menu Layout — Positioning, sizing, flexbox
+ * Source: design/ux/main-menu-visual-design.md section 3
+ * Base Resolution: 1920x1080
+ * ============================================================ */
+
+/* ---- Root ---- */
+.menu-root {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+/* ---- Background Layer ---- */
+.menu-background {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--color-abyss);
+    pointer-events: none;
+}
+
+/* ---- Top Bar (top-left, ~10% of screen height) ---- */
+.top-bar {
+    position: absolute;
+    top: var(--topbar-top-margin);
+    left: var(--topbar-left-margin);
+    flex-direction: row;
+    align-items: center;
+}
+
+/* ---- Top Bar Buttons ---- */
+.top-bar-btn {
+    background-color: var(--topbar-btn-bg);
+    border-width: 0px;
+    border-radius: var(--topbar-btn-border-radius);
+    padding-left: var(--topbar-btn-padding-h);
+    padding-right: var(--topbar-btn-padding-h);
+    padding-top: var(--topbar-btn-padding-v);
+    padding-bottom: var(--topbar-btn-padding-v);
+    margin-right: var(--topbar-btn-gap);
+    color: var(--topbar-btn-text);
+    font-size: var(--topbar-font-size);
+    font-family: var(--font-family);
+    font-weight: var(--font-weight-medium);
+    letter-spacing: var(--topbar-letter-spacing);
+    line-height: var(--topbar-line-height);
+    -unity-text-align: middle-center;
+    cursor: default;
+}
+
+.top-bar-btn:last-child {
+    margin-right: 0;
+}
+
+/* ---- Center Focus Area (CTA, centered vertically at ~43% height) ---- */
+.center-area {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    justify-content: center;
+    align-items: center;
+}
+
+/* ---- CTA Button ---- */
+.cta-button {
+    width: var(--cta-width);
+    height: var(--cta-height);
+    background-color: var(--cta-bg-color);
+    border-width: var(--cta-border-width);
+    border-color: var(--cta-border-color);
+    border-radius: var(--cta-border-radius);
+    justify-content: center;
+    align-items: center;
+    padding-top: 18px;
+    padding-bottom: 12px;
+    padding-left: 20px;
+    padding-right: 20px;
+    cursor: default;
+}
+
+/* ---- CTA Text Container ---- */
+.cta-main-text {
+    -unity-text-align: middle-center;
+    margin-bottom: 4px;
+}
+
+.cta-sub-text {
+    -unity-text-align: middle-center;
+}
+
+/* ---- Bottom Atmosphere Area ---- */
+.bottom-area {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 200px;
+    justify-content: center;
+    align-items: center;
+}
+
+/* ---- Title Container (title + deco lines) ---- */
+.title-container {
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.title-text-block {
+    flex-direction: column;
+    align-items: center;
+    margin-left: 16px;
+    margin-right: 16px;
+}
+
+.title-deco-line {
+    width: 60px;
+    height: 1px;
+    background-color: var(--deco-line-color);
+}
+
+/* ---- Title CN / EN ---- */
+.title-cn {
+    -unity-text-align: middle-center;
+}
+
+.title-en {
+    -unity-text-align: middle-center;
+    margin-top: 2px;
+}
+
+/* ---- Footer (bottom corners) ---- */
+.footer {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 20px;
+    flex-direction: row;
+    justify-content: space-between;
+    padding-left: var(--footer-safe-margin);
+    padding-right: var(--footer-safe-margin);
+}
+
+.version-text {
+    -unity-text-align: middle-left;
+}
+
+.copyright-text {
+    -unity-text-align: middle-right;
+}
+
+/* ---- Dialog Overlay (fullscreen) ---- */
+.dialog-overlay {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--dialog-overlay-color);
+    justify-content: center;
+    align-items: center;
+}
+
+/* ---- Dialog Panel ---- */
+.dialog-panel {
+    width: var(--dialog-width);
+    min-height: var(--dialog-min-height);
+    background-color: var(--dialog-panel-bg);
+    border-width: 1px;
+    border-color: var(--dialog-border-color);
+    border-radius: var(--dialog-border-radius);
+    padding: var(--dialog-padding);
+    justify-content: center;
+    align-items: center;
+}
+
+/* ---- Dialog Title ---- */
+.dialog-title {
+    -unity-text-align: middle-center;
+    margin-bottom: 24px;
+}
+
+/* ---- Dialog Buttons Container ---- */
+.dialog-buttons {
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+/* ---- Dialog Buttons ---- */
+.dialog-btn {
+    width: var(--dialog-btn-width);
+    height: var(--dialog-btn-height);
+    background-color: var(--dialog-btn-bg);
+    border-width: 0px;
+    border-radius: var(--dialog-btn-border-radius);
+    color: var(--topbar-btn-text);
+    font-size: var(--dialog-btn-font-size);
+    font-family: var(--font-family);
+    font-weight: var(--font-weight-medium);
+    letter-spacing: var(--dialog-btn-letter-spacing);
+    line-height: var(--dialog-btn-line-height);
+    -unity-text-align: middle-center;
+    margin-left: 12px;
+    margin-right: 12px;
+    cursor: default;
+}

@@ -1,0 +1,122 @@
+/* ============================================================
+ * USS Main Menu Layout — Positioning & Flexbox
+ * Source: design/ux/main-menu-visual-design.md section 3
+ * Base Resolution: 1920x1080
+ * ============================================================ */
+
+/* Root: fullscreen */
+.menu-root {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+/* Background: fullscreen behind everything */
+.menu-background {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--mm-bg-color);
+}
+
+/* Top bar: top-left, horizontal row */
+.top-bar {
+    position: absolute;
+    left: var(--mm-topbar-margin-left);
+    top: var(--mm-topbar-margin-top);
+    flex-direction: row;
+    align-items: flex-start;
+}
+
+.top-bar-btn {
+    margin-right: var(--mm-topbar-btn-gap);
+}
+
+/* Center area: screen center, vertical column */
+.center-area {
+    position: absolute;
+    left: 50%;
+    top: 45%;
+    transform: translate(-50%, -50%);
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Bottom area: lower center */
+.bottom-area {
+    position: absolute;
+    left: 50%;
+    bottom: 120px;
+    transform: translate(-50%, 0);
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.title-container {
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.title-text-block {
+    flex-direction: column;
+    align-items: center;
+    margin-left: 16px;
+    margin-right: 16px;
+}
+
+.title-deco-line {
+    width: var(--mm-title-line-width);
+    height: var(--mm-title-line-height);
+    background-color: var(--mm-title-line-color);
+}
+
+/* Footer: bottom corners */
+.footer {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: var(--mm-bottom-margin);
+    flex-direction: row;
+    justify-content: space-between;
+    padding-left: var(--mm-version-margin);
+    padding-right: var(--mm-version-margin);
+}
+
+/* Dialog overlay: fullscreen */
+.dialog-overlay {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.dialog-panel {
+    width: var(--mm-modal-width);
+    min-height: var(--mm-modal-min-height);
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--mm-modal-padding);
+}
+
+.dialog-buttons {
+    flex-direction: row;
+    justify-content: center;
+    margin-top: 24px;
+}
+
+.dialog-btn {
+    width: var(--mm-modal-btn-width);
+    height: var(--mm-modal-btn-height);
+    margin-left: calc(var(--mm-modal-btn-gap) / 2);
+    margin-right: calc(var(--mm-modal-btn-gap) / 2);
+}

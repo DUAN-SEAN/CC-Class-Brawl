@@ -1,0 +1,399 @@
+# Architecture Decision Registry
+#
+# PURPOSE: Single source of truth for key architectural stances that all ADRs
+# must agree on. Skills check this before writing new ADRs to detect conflicts
+# at authoring time — before stories are created against contradictory decisions.
+#
+# RULES:
+#   - Register a stance when it constrains how OTHER systems must be built.
+#     An internal implementation detail that affects only one ADR does not need
+#     to be registered.
+#   - Never delete entries — set status: superseded_by: ADR-NNNN instead.
+#   - When a stance changes: update the entry, set revised: to today's date,
+#     add a comment with the old value, and run /architecture-review to check
+#     what ADRs are now invalidated.
+#   - adr: is the authoritative source. All other ADRs that depend on this
+#     stance list themselves in referenced_by.
+#
+# WRITTEN BY: /architecture-decision (Phase 5 — after ADR is approved)
+# READ BY:    /architecture-decision (Step 2 — before authoring begins)
+#             /architecture-review (Phase 4 — cross-ADR conflict baseline)
+#             /create-stories (to embed architectural constraints in stories)
+#             /dev-story (to check implementation against accepted stances)
+#
+# SEARCH PATTERNS (for skills using Grep):
+#   All state owners:       Grep pattern="^  - state:" path="docs/registry/architecture.yaml"
+#   Who owns player_health: Grep pattern="state: player_health"
+#   All signal contracts:   Grep pattern="pattern: signal"
+#   Budget for combat:      Grep pattern="system: combat"
+#   All forbidden patterns: Grep pattern="^  - pattern:" (forbidden_patterns section)
+#   Superseded entries:     Grep pattern="status: superseded"
+
+version: 1
+last_updated: "2026-05-24"
+
+# ─── STATE OWNERSHIP ─────────────────────────────────────────────────────────
+# Who is the authoritative owner of each piece of shared game state.
+# Conflicts: two ADRs claiming to own the same state = data race / authority bug.
+#
+# Register state when it is READ or WRITTEN by more than one system.
+# Internal-only state (never accessed by another system) does not need to be registered.
+#
+# Required fields: state, owner_system, adr, interface, referenced_by[], added
+# interface: how other systems access this state (read-only property, method call,
+#   signal, shared resource, etc.) — this is the contract other ADRs depend on.
+
+state_ownership:
+  - state: character_velocity
+    status: active
+    owner_system: physics-timestep
+    adr: docs/architecture/adr-0001-physics-timestep.md
+    interface: "Rigidbody2D.velocity (Vector2, read-write by owner systems via explicit SetVelocity calls)"
+    write_access: 3c-system, knockback-system, combat-fsm (delegated)
+    referenced_by:
+      - docs/architecture/adr-0001-physics-timestep.md
+      - design/gdd/3c-system.md
+      - design/gdd/knockback-launch-system.md
+    added: 2026-05-24
+    revised: ""
+
+  - state: combat_state
+    status: active
+    owner_system: combat-fsm
+    adr: docs/architecture/adr-0002-dual-fsm-architecture.md
+    interface: "ICombatStateProvider.GetCurrentState() (CombatState enum, read-only for other systems)"
+    write_access: combat-fsm-only
+    referenced_by:
+      - docs/architecture/adr-0002-dual-fsm-architecture.md
+      - design/gdd/combat-state-machine.md
+    added: 2026-05-24
+    revised: ""
+
+  - state: movement_state
+    status: active
+    owner_system: movement-controller
+    adr: docs/architecture/adr-0002-dual-fsm-architecture.md
+    interface: "IMovementController.GetState() (MovementState enum, read-only for other systems)"
+    write_access: movement-controller-only (combat-fsm controls via FreezeMovement/SetVelocity, not direct state write)
+    referenced_by:
+      - docs/architecture/adr-0002-dual-fsm-architecture.md
+      - design/gdd/3c-system.md
+    added: 2026-05-24
+    revised: ""
+
+# Example:
+#
+# state_ownership:
+#   - state: player_health
+#     status: active           # active | superseded_by: ADR-NNNN
+#     owner_system: health-system
+#     adr: docs/architecture/adr-0001-health-system.md
+#     interface: "HealthComponent.current_health (read-only float, range 0–max_health)"
+#     write_access: health-system-only   # only owner can write; others read
+#     referenced_by:
+#       - docs/architecture/adr-0001-health-system.md
+#       - docs/architecture/adr-0003-combat-system.md   # reads to apply damage
+#       - docs/architecture/adr-0007-ui-system.md       # reads to display HUD
+#     added: 2026-03-26
+#     revised: ""
+
+
+# ─── INTERFACE CONTRACTS ──────────────────────────────────────────────────────
+# How systems are required to communicate with each other.
+# Conflicts: one ADR expects signal, another expects direct call = integration bug.
+#
+# Register a contract when the communication pattern between two systems is
+# explicitly decided in an ADR and other systems must follow the same pattern.
+#
+# pattern options: signal | direct_call | event_bus | shared_resource | rpc | none
+
+interfaces:
+  - contract: movement_coordination
+    status: active
+    pattern: direct_call
+    producer: combat-fsm
+    consumers:
+      - movement-controller
+    adr: docs/architecture/adr-0002-dual-fsm-architecture.md
+    signal_signature: "IMovementController.FreezeMovement(bool) / SetVelocity(Vector2)"
+    referenced_by:
+      - docs/architecture/adr-0002-dual-fsm-architecture.md
+      - design/gdd/combat-state-machine.md
+    added: 2026-05-24
+    revised: ""
+
+# Example:
+#
+# interfaces:
+#   - contract: damage_delivery
+#     status: active
+#     pattern: signal          # how the producer notifies consumers
+#     producer: combat-system
+#     consumers:
+#       - health-system        # receives damage_dealt signal, applies to health
+#       - ui-system            # receives damage_dealt signal, shows damage number
+#       - audio-system         # receives damage_dealt signal, plays SFX
+#     adr: docs/architecture/adr-0003-combat-system.md
+#     signal_signature: "damage_dealt(amount: float, target: Node, is_crit: bool)"
+#     referenced_by:
+#       - docs/architecture/adr-0003-combat-system.md
+#       - docs/architecture/adr-0001-health-system.md
+#     added: 2026-03-26
+#     revised: ""
+
+
+# ─── PERFORMANCE BUDGETS ──────────────────────────────────────────────────────
+# Frame time allocations per system, against a defined total frame budget.
+# Conflicts: allocations that sum to more than the total budget = unshippable.
+#
+# Register a budget when an ADR explicitly claims a frame time allocation.
+# The registry lets /architecture-review verify the total doesn't exceed the target.
+
+performance_budgets:
+  - target_fps: 60
+    total_frame_budget_ms: 16.6
+    platform: PC
+    adr: docs/architecture/adr-0001-physics-timestep.md
+    added: 2026-05-24
+    revised: ""
+
+  - system: physics_total
+    status: active
+    budget_ms: 3.0
+    adr: docs/architecture/adr-0001-physics-timestep.md
+    notes: "Combined budget for 3C movement + collision detection + knockback physics at 60Hz"
+    referenced_by:
+      - docs/architecture/adr-0001-physics-timestep.md
+    added: 2026-05-24
+    revised: ""
+
+# Example:
+#
+# performance_budgets:
+#   - target_fps: 60
+#     total_frame_budget_ms: 16.6
+#     platform: PC             # PC | Console | Mobile | All
+#     adr: docs/architecture/adr-0000-performance-targets.md
+#     added: 2026-03-26
+#     revised: ""
+#
+#   - system: combat
+#     status: active
+#     budget_ms: 2.0
+#     adr: docs/architecture/adr-0003-combat-system.md
+#     notes: "Includes physics queries, hitbox evaluation, and damage calculation"
+#     referenced_by:
+#       - docs/architecture/adr-0003-combat-system.md
+#     added: 2026-03-26
+#     revised: ""
+
+
+# ─── API DECISIONS ───────────────────────────────────────────────────────────
+# Which engine APIs are chosen for which purpose across the project.
+# Conflicts: two ADRs using different APIs for the same purpose = inconsistent
+# implementation that breaks when one system expects the other's API.
+#
+# Register an API decision when the choice is non-obvious and other ADRs might
+# make a different choice for the same purpose without knowing this was decided.
+
+api_decisions:
+  - purpose: physics_velocity_assignment
+    status: active
+    api: Rigidbody2D.velocity = newVelocity
+    not: Rigidbody2D.AddForce()
+    adr: docs/architecture/adr-0001-physics-timestep.md
+    reason: "Frame-exact velocity control required for fighting game — AddForce has one-frame delay and non-deterministic results through Box2D solver"
+    referenced_by:
+      - docs/architecture/adr-0001-physics-timestep.md
+    added: 2026-05-24
+    revised: ""
+
+  - purpose: physics_gravity
+    status: active
+    api: Manual gravity in FixedUpdate (velocity.y -= Gravity * dt)
+    not: Rigidbody2D.gravityScale
+    adr: docs/architecture/adr-0001-physics-timestep.md
+    reason: "Per-state gravity multiplier support (fast-fall 2.2x, normal 1.0x); precise terminal velocity clamping; transparent, testable formula"
+    referenced_by:
+      - docs/architecture/adr-0001-physics-timestep.md
+    added: 2026-05-24
+    revised: ""
+
+  - purpose: physics_timestep
+    status: active
+    api: Time.fixedDeltaTime = 1/60 via Project Settings
+    not: Unity default 50Hz (0.02s)
+    adr: docs/architecture/adr-0001-physics-timestep.md
+    reason: "Fighting game requires physics step frequency to match frame animation (60fps) for frame-exact hit detection and input buffering"
+    referenced_by:
+      - docs/architecture/adr-0001-physics-timestep.md
+    added: 2026-05-24
+    revised: ""
+
+  - purpose: hitbox_hurtbox_detection
+    status: active
+    api: Unity Physics2D OnTriggerEnter2D + Layer Collision Matrix
+    not: Manual AABB overlap checking, Physics2D.OverlapBox polling
+    adr: docs/architecture/adr-0003-hitbox-hurtbox-detection.md
+    reason: "Trigger callbacks are native to physics step timing, naturally deduplicate per-overlap, and Layer Matrix filters at engine level. Manual AABB duplicates Unity's built-in collision work."
+    referenced_by:
+      - docs/architecture/adr-0003-hitbox-hurtbox-detection.md
+    added: 2026-05-24
+    revised: ""
+
+  - purpose: physics_auto_sync_transforms
+    status: active
+    api: Physics2D.autoSyncTransforms = true
+    not: false with manual Physics2D.SyncTransforms() calls
+    adr: docs/architecture/adr-0003-hitbox-hurtbox-detection.md
+    reason: "Eliminates Transform sync timing bugs for hitbox positioning. Performance cost negligible with <10 colliders."
+    referenced_by:
+      - docs/architecture/adr-0003-hitbox-hurtbox-detection.md
+    added: 2026-05-24
+    revised: ""
+
+  - purpose: gameplay_data_storage
+    status: active
+    api: ScriptableObject (ClassData, SkillData, ArenaConfig)
+    not: JSON/CSV external files, C# hardcoded constants
+    adr: docs/architecture/adr-0004-skill-system-data-driven.md
+    reason: "SO enables Unity Inspector editing for designers; data-driven approach allows content creation without code changes; MVP data volume (<20 assets) does not need external toolchain complexity"
+    referenced_by:
+      - docs/architecture/adr-0004-skill-system-data-driven.md
+      - design/gdd/skill-database.md
+      - design/gdd/class-system.md
+    added: 2026-05-24
+    revised: ""
+
+  - purpose: state_definition_type
+    status: active
+    api: readonly struct StateDefinition (stack-allocated, zero GC)
+    not: ScriptableObject for runtime FSM registration data
+    adr: docs/architecture/adr-0004-skill-system-data-driven.md
+    reason: "StateDefinition is transient runtime data created from SkillData.AttackData; does not need Unity serialization or Inspector editing; readonly struct guarantees immutability and zero GC pressure"
+    referenced_by:
+      - docs/architecture/adr-0004-skill-system-data-driven.md
+      - docs/architecture/adr-0002-dual-fsm-architecture.md
+    added: 2026-05-24
+    revised: ""
+
+  - purpose: input_system
+    status: active
+    api: com.unity.inputsystem 1.7.x (New Input System)
+    not: Legacy Input Manager (Input.GetAxis/GetButton)
+    adr: docs/architecture/adr-0005-input-system.md
+    reason: "Legacy Input Manager cannot distinguish multiple same-type devices (two gamepads); no event-driven callbacks; no Control Schemes; API in maintenance mode"
+    referenced_by:
+      - docs/architecture/adr-0005-input-system.md
+      - design/gdd/3c-system.md
+    added: 2026-05-24
+    revised: ""
+
+  - purpose: player_input_behavior
+    status: active
+    api: PlayerInput with Behavior = InvokeCSharpEvents
+    not: SendMessage (default), InvokeUnityEvents
+    adr: docs/architecture/adr-0005-input-system.md
+    reason: "SendMessage uses reflection with performance overhead; InvokeCSharpEvents is pure C# delegate, zero reflection, best performance for frame-exact fighting game input"
+    referenced_by:
+      - docs/architecture/adr-0005-input-system.md
+    added: 2026-05-24
+    revised: ""
+
+  - purpose: input_device_pairing
+    status: active
+    api: PlayerInput + PlayerInputManager with Control Schemes
+    not: Manual Gamepad.all[] indexing, direct InputUser management
+    adr: docs/architecture/adr-0005-input-system.md
+    reason: "PlayerInputManager encapsulates device discovery, pairing, and Control Scheme auto-switching. Manual device indexing breaks when devices disconnect/reconnect (index order is non-deterministic)."
+    referenced_by:
+      - docs/architecture/adr-0005-input-system.md
+      - design/gdd/3c-system.md
+    added: 2026-05-24
+    revised: ""
+
+# Example:
+#
+# api_decisions:
+#   - purpose: physics_raycast
+#     status: active
+#     api: PhysicsServer3D.space_get_direct_state()
+#     not: RayCast3D node     # explicitly banned for this purpose
+#     adr: docs/architecture/adr-0002-physics-architecture.md
+#     reason: "Direct server calls avoid per-frame node overhead; 3× faster in profiling"
+#     referenced_by:
+#       - docs/architecture/adr-0002-physics-architecture.md
+#       - docs/architecture/adr-0003-combat-system.md
+#     added: 2026-03-26
+#     revised: ""
+
+
+# ─── FORBIDDEN PATTERNS ──────────────────────────────────────────────────────
+# Architecture anti-patterns explicitly banned by accepted ADRs.
+# When writing a new ADR, check this list — if the proposed approach matches
+# a forbidden pattern, it must be reworked before the ADR can be Accepted.
+#
+# Register a pattern when an ADR explicitly bans it AND other ADRs might
+# unknowingly use it (i.e., it's a tempting but wrong approach for this project).
+
+forbidden_patterns:
+  - pattern: script_execution_order_for_fsm_coordination
+    status: active
+    description: "FSM coordination must use explicit call ordering (CharacterController mediator),
+      not Unity's Script Execution Order project setting."
+    why: "Script Execution Order is a global project setting not visible in code. Explicit
+      call ordering self-documents dependencies and is easier to maintain."
+    adr: docs/architecture/adr-0002-dual-fsm-architecture.md
+    added: 2026-05-24
+
+  - pattern: manual_collision_detection_for_hitbox
+    status: active
+    description: "Do not implement manual AABB overlap checking for hitbox/hurtbox
+      detection. Use Unity Physics2D Trigger system with Layer Collision Matrix instead."
+    why: "Manual AABB duplicates Unity's built-in collision work. Trigger callbacks
+      are native to physics step timing and naturally deduplicate per-overlap. Adding
+      manual detection adds code complexity without performance benefit for <10 colliders."
+    adr: docs/architecture/adr-0003-hitbox-hurtbox-detection.md
+    added: 2026-05-24
+
+  - pattern: hardcoded_gameplay_data
+    status: active
+    description: "Gameplay values (movement params, attack frames, damage, knockback,
+      skill stats) must not be hardcoded as C# constants or static fields. All game
+      data must be defined in ScriptableObject assets (ClassData, SkillData, ArenaConfig)."
+    why: "Fighting game balance requires frequent numerical tuning; hardcoded values
+      force recompile-rebuild-test cycles that are too slow for iterative balancing.
+      SO enables designers to adjust values in Inspector without programmer involvement."
+    adr: docs/architecture/adr-0004-skill-system-data-driven.md
+    added: 2026-05-24
+
+  - pattern: sendmessage_input_routing
+    status: active
+    description: "PlayerInput must not use Behavior = SendMessage. Use InvokeCSharpEvents
+      (or InvokeUnityEvents as second choice) instead."
+    why: "SendMessage uses reflection to call methods by name, introducing per-frame GC
+      allocation and non-deterministic overhead. Fighting games require predictable,
+      minimal-latency input processing. InvokeCSharpEvents is pure C# delegate dispatch."
+    adr: docs/architecture/adr-0005-input-system.md
+    added: 2026-05-24
+
+# Example:
+#
+# forbidden_patterns:
+#   - pattern: autoload_singleton_coupling
+#     status: active
+#     description: "Systems must not directly reference Autoload singletons by name.
+#       Use dependency injection or signals instead."
+#     why: "Tight coupling to Autoloads makes systems untestable in isolation and
+#       creates hidden dependencies that break when Autoload load order changes."
+#     adr: docs/architecture/adr-0001-health-system.md
+#     added: 2026-03-26
+#
+#   - pattern: direct_cross_system_state_write
+#     status: active
+#     description: "A system must never write to state owned by another system.
+#       Use signals or method calls on the owner instead."
+#     why: "Direct state writes create race conditions and break the state
+#       ownership model. The owning system must be the sole writer."
+#     adr: docs/architecture/adr-0000-architecture-principles.md
+#     added: 2026-03-26

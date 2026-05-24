@@ -1,0 +1,107 @@
+/* ============================================================
+ * USS HUD Theme — CSS Custom Properties (Design Tokens)
+ * Source: design/ux/hud-visual-design.md sections 1-2
+ * Base Resolution: 1920x1080
+ * ============================================================ */
+
+:root {
+    /* ---- Typography (section 1.2) ---- */
+    --font-family: "Exo 2", "Noto Sans SC", sans-serif;
+    --font-weight-medium: 500;
+    --font-weight-semibold: 600;
+    --font-weight-bold: 700;
+    --font-weight-regular: 400;
+
+    --damage-font-size: 56px;
+    --damage-letter-spacing: 2.8px;       /* 5% of 56px */
+    --damage-line-height: 78px;            /* 140% of 56px */
+
+    --score-font-size: 28px;
+    --score-letter-spacing: 1.1px;         /* 4% of 28px */
+    --score-line-height: 39px;             /* 140% of 28px */
+
+    --round-font-size: 18px;
+    --round-letter-spacing: 0.7px;         /* 4% of 18px */
+    --round-line-height: 25px;             /* 140% of 18px */
+
+    --ko-font-size: 84px;
+    --ko-letter-spacing: 4.2px;            /* 5% of 84px */
+    --ko-line-height: 118px;               /* 140% of 84px */
+
+    --key-hint-font-size: 12px;
+    --key-hint-letter-spacing: 0.5px;      /* 4% of 12px */
+    --key-hint-line-height: 17px;          /* 140% of 12px */
+
+    --max-label-font-size: 10px;
+    --max-label-letter-spacing: 0.4px;     /* 4% of 10px */
+    --max-label-line-height: 14px;         /* 140% of 10px */
+
+    --match-point-font-size: 28px;
+
+    /* ---- Damage Percent Danger Colors (section 2.2) ---- */
+    --damage-color-safe: rgb(255, 255, 255);       /* #FFFFFF  0-49%   */
+    --damage-color-warn: rgb(255, 215, 0);          /* #FFD700  50-99%  */
+    --damage-color-danger: rgb(255, 140, 0);        /* #FF8C00  100-149% */
+    --damage-color-critical: rgb(255, 32, 32);      /* #FF2020  150%+   */
+
+    /* ---- UI Structural Colors (section 2.3) ---- */
+    --color-panel-bg: rgba(26, 26, 46, 0.9);       /* #1A1A2E 90% */
+    --color-focus-track: rgb(51, 51, 51);           /* #333333 */
+    --color-skill-icon-bg: rgb(42, 42, 62);        /* #2A2A3E */
+    --color-empty-slot-outline: rgb(85, 85, 85);    /* #555555 */
+    --color-border: rgba(58, 58, 92, 0.6);          /* #3A3A5C 60% */
+    --color-text-primary: rgb(255, 255, 255);       /* #FFFFFF */
+    --color-text-secondary: rgb(232, 232, 240);     /* #E8E8F0 */
+    --color-disabled: rgb(102, 102, 102);           /* #666666 */
+    --color-max-label: rgb(170, 170, 170);          /* #AAAAAA ~4.7:1 on #333333 */
+    --color-score-bg: rgba(26, 26, 46, 0.7);       /* #1A1A2E 70% */
+    --color-interrupt-flash: rgb(255, 32, 32);      /* #FF2020 */
+
+    /* ---- Rarity Border Colors (section 2.4) ---- */
+    --rarity-common-color: rgb(255, 255, 255);      /* #FFFFFF */
+    --rarity-rare-color: rgb(155, 89, 182);         /* #9B59B6 */
+    --rarity-epic-color: rgb(240, 192, 64);         /* #F0C040 */
+
+    /* ---- Player Identity Color (set at runtime via --player-color) ---- */
+    --player-color: rgb(255, 255, 255);
+
+    /* ---- Edge Warning (section 2.6) ---- */
+    --edge-warning-start: rgb(255, 140, 0);          /* #FF8C00 */
+    --edge-warning-end: rgb(255, 32, 32);            /* #FF2020 */
+
+    /* ---- Focus Bar Fill (section 2.5) ---- */
+    --focus-fill-color: var(--player-color);
+    --focus-flash-color: rgb(255, 255, 255);         /* unlock flash */
+    --focus-max-color: rgb(102, 102, 102);           /* MAX gray */
+
+    /* ---- Match Point (section 3.4) ---- */
+    --match-point-color: rgb(255, 215, 0);           /* #FFD700 */
+
+    /* ---- KO Notification Outline (section 3.5) ---- */
+    --ko-outline-color: rgb(0, 0, 0);                /* default black; C# sets to winner class color */
+
+    /* ---- Sizing ---- */
+    --skill-slot-size: 48px;
+    --skill-slot-gap: 4px;
+    --focus-bar-width: 140px;
+    --focus-bar-height: 10px;
+    --info-area-padding: 10px;
+    --edge-margin: 16px;
+    --bottom-margin: 12px;
+    --score-area-height: 40px;
+    --score-area-width: 200px;
+
+    /* ---- Animation Durations ---- */
+    --anim-damage-bounce: 150ms;
+    --anim-color-transition: 200ms;
+    --anim-skill-equip: 250ms;
+    --anim-skill-equip-p1: 50ms;
+    --anim-skill-equip-p2: 200ms;
+    --anim-flash-white: 100ms;
+    --anim-flash-red: 200ms;
+    --anim-hud-fade: 300ms;
+    --anim-arrow-appear: 150ms;
+
+    /* ---- Damage Bounce Scale ---- */
+    --damage-bounce-scale: 1.3;
+}

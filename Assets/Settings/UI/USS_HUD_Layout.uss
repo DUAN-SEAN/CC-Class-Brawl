@@ -1,0 +1,215 @@
+/* ============================================================
+ * USS HUD Layout — Positioning, sizing, flexbox
+ * Source: design/ux/hud.md Layout Zones, hud-visual-design.md section 3
+ * ============================================================ */
+
+/* ---- Root ---- */
+.hud-root {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+/* ---- Score Area (top center, ~200x40px) ---- */
+.score-area {
+    position: absolute;
+    top: var(--edge-margin);
+    left: 50%;
+    translate: -50% 0;
+    width: var(--score-area-width);
+    height: var(--score-area-height);
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--color-score-bg);
+    border-width: 1px;
+    border-color: var(--color-border);
+    border-radius: 4px;
+    padding-left: 12px;
+    padding-right: 12px;
+}
+
+/* ---- Player Info Areas ---- */
+.player-info {
+    position: absolute;
+    bottom: var(--bottom-margin);
+    height: 80px;
+    flex-direction: row;
+    align-items: center;
+    padding: var(--info-area-padding);
+    background-color: var(--color-panel-bg);
+    border-radius: 4px;
+}
+
+/* P1: left bottom */
+.player-info.p1 {
+    left: var(--edge-margin);
+    flex-direction: row;
+}
+
+/* P2: right bottom, mirrored child order */
+.player-info.p2 {
+    right: var(--edge-margin);
+    flex-direction: row;
+}
+
+/* ---- Damage Percent ---- */
+.damage-percent {
+    font-size: var(--damage-font-size);
+    flex-shrink: 0;
+    -unity-text-align: middle-center;
+    color: var(--damage-color-safe);
+    padding-left: 4px;
+    padding-right: 4px;
+}
+
+/* ---- Focus Bar ---- */
+.focus-bar {
+    width: var(--focus-bar-width);
+    height: var(--focus-bar-height);
+    background-color: var(--color-focus-track);
+    flex-shrink: 0;
+    overflow: hidden;
+    margin-left: 8px;
+    margin-right: 8px;
+    position: relative;
+}
+
+.focus-fill {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 0%;
+    background-color: var(--focus-fill-color);
+}
+
+.threshold-marker {
+    position: absolute;
+    top: 0;
+    width: 1px;
+    height: 100%;
+    background-color: var(--color-text-secondary);
+}
+
+.max-label {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    translate: -50% -50%;
+    font-size: var(--max-label-font-size);
+    color: var(--color-max-label);
+    display: none;
+}
+
+/* ---- Skill Slots ---- */
+.skill-slots {
+    flex-direction: row;
+    flex-shrink: 0;
+}
+
+.skill-slot {
+    width: var(--skill-slot-size);
+    height: var(--skill-slot-size);
+    margin-left: calc(var(--skill-slot-gap) / 2);
+    margin-right: calc(var(--skill-slot-gap) / 2);
+    background-color: var(--color-skill-icon-bg);
+    border-width: 1px;
+    border-color: var(--color-empty-slot-outline);
+    border-radius: 4px;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    position: relative;
+}
+
+.skill-slot:first-child {
+    margin-left: 0;
+}
+
+.skill-slot:last-child {
+    margin-right: 0;
+}
+
+.skill-icon {
+    width: 24px;
+    height: 24px;
+    -unity-background-scale-mode: scale-to-fit;
+}
+
+.key-hint {
+    font-size: var(--key-hint-font-size);
+    color: var(--color-text-secondary);
+    -unity-text-align: middle-center;
+    position: absolute;
+    bottom: 2px;
+    left: 0;
+    right: 0;
+}
+
+/* ---- KO Notification ---- */
+.ko-notification {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    translate: -50% -50%;
+    font-size: var(--ko-font-size);
+    color: var(--color-text-primary);
+    -unity-text-align: middle-center;
+    display: none;
+}
+
+/* ---- Edge Warning (fullscreen overlay) ---- */
+.edge-warning {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    display: none;
+    pointer-events: none;
+}
+
+/* ---- Direction Arrows Container ---- */
+.direction-arrows {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.direction-arrow {
+    width: 24px;
+    height: 24px;
+    position: absolute;
+    display: none;
+    -unity-background-scale-mode: scale-to-fit;
+}
+
+/* ---- Score Text ---- */
+.score-text {
+    font-size: var(--score-font-size);
+    color: var(--color-text-primary);
+    flex-shrink: 0;
+}
+
+/* ---- Round Text ---- */
+.round-text {
+    font-size: var(--round-font-size);
+    color: var(--color-text-secondary);
+    flex-shrink: 0;
+    margin-left: 8px;
+}
+
+/* ---- Match Point Indicator ---- */
+.match-point {
+    font-size: var(--match-point-font-size);
+    color: var(--match-point-color);
+    flex-shrink: 0;
+    margin-left: 4px;
+    display: none;
+}

@@ -1,0 +1,71 @@
+/* ============================================================
+ * USS Main Menu High Contrast Override
+ * Source: design/ux/main-menu-visual-design.md section 2.4
+ * Applied when high-contrast accessibility mode is enabled.
+ * ============================================================ */
+
+.menu-root.high-contrast {
+    /* Parent class enables all overrides below */
+}
+
+/* ---- Title CN: opacity 20% -> 40% ---- */
+.menu-root.high-contrast .title-cn {
+    color: rgba(255, 255, 255, 0.40);
+}
+
+/* ---- Title EN: opacity 15% -> 35% ---- */
+.menu-root.high-contrast .title-en {
+    color: rgba(255, 255, 255, 0.35);
+}
+
+/* ---- Version: #3A3A5C -> #666666 ---- */
+.menu-root.high-contrast .version-text {
+    color: rgb(102, 102, 102);
+}
+
+/* ---- Copyright: #3A3A5C -> #666666 ---- */
+.menu-root.high-contrast .copyright-text {
+    color: rgb(102, 102, 102);
+}
+
+/* ---- CTA Pulse Border: amplitude reduced, dim phase 40% -> 70% ---- */
+.menu-root.high-contrast .cta-button.pulse-dim {
+    border-opacity: 0.7;
+}
+
+/* ---- Dialog Overlay: stronger isolation ---- */
+.menu-root.high-contrast .dialog-overlay {
+    background-color: rgba(0, 0, 0, 0.80);
+}
+
+/* ---- Top Bar Button: darker plate for text contrast ---- */
+.menu-root.high-contrast .top-bar-btn {
+    background-color: var(--color-abyss);
+}
+
+/* ---- Dialog Button: darker plate ---- */
+.menu-root.high-contrast .dialog-btn {
+    background-color: var(--color-abyss);
+}
+
+/* ---- Border widths: all doubled ---- */
+.menu-root.high-contrast .top-bar-btn:focus {
+    border-width: 4px;
+}
+
+.menu-root.high-contrast .dialog-btn:focus {
+    border-width: 4px;
+}
+
+.menu-root.high-contrast .cta-button {
+    border-width: 6px;
+}
+
+/* ---- CTA Text: ensure readability on white ---- */
+.menu-root.high-contrast .cta-main-text {
+    color: rgb(0, 0, 0);
+}
+
+.menu-root.high-contrast .cta-sub-text {
+    color: rgb(40, 40, 40);
+}

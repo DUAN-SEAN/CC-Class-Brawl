@@ -1,0 +1,47 @@
+/* ============================================================
+ * USS Main Menu Animation — State classes & transitions
+ * Source: design/ux/main-menu-visual-design.md section 5
+ *
+ * Note: UI Toolkit 2022.3 does not support custom cubic-bezier
+ * in USS transitions. Complex easing is handled in C# via
+ * HUDAnimator tween methods. USS transitions only handle simple
+ * linear or built-in ease states.
+ * ============================================================ */
+
+/* ---- Initial hidden state ---- */
+.fade-out {
+    opacity: 0;
+}
+
+.fade-in {
+    opacity: 1;
+}
+
+/* ---- Entrance animation state markers ---- */
+.entrance-visible {
+    /* Marker class; actual opacity/scale set by C# tweens */
+}
+
+/* ---- CTA Pulse States ---- */
+.pulsing {
+    /* Marker class for C# pulse animation active */
+}
+
+.pulse-stopped {
+    /* Reduced-motion: fixed border opacity */
+    border-color: rgba(240, 192, 64, 0.70);
+}
+
+/* ---- Background Breathing ---- */
+.breathing {
+    /* Marker class for C# breathing animation active */
+}
+
+/* ---- Dialog Animation States ---- */
+.dialog-enter {
+    /* Marker class; actual scale/opacity animated by C# */
+}
+
+.dialog-exit {
+    /* Marker class; actual scale/opacity animated by C# */
+}

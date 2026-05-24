@@ -1,0 +1,56 @@
+/* ============================================================
+ * USS Main Menu Reduced Motion Override
+ * Source: design/ux/main-menu-visual-design.md section 5.7
+ * Applied when reduced-motion accessibility mode is enabled.
+ *
+ * Principle: Keep informational animations (fades, focus states).
+ * Remove decorative animations (pulsing, breathing, stagger).
+ * ============================================================ */
+
+.menu-root.reduced-motion {
+    /* Parent class enables all overrides below */
+}
+
+/* ---- Entrance Sequence: simplified to single 0.3s fade ---- */
+.menu-root.reduced-motion .menu-background,
+.menu-root.reduced-motion .top-bar,
+.menu-root.reduced-motion .footer,
+.menu-root.reduced-motion .cta-button,
+.menu-root.reduced-motion .title-container {
+    transition: opacity 300ms cubic-bezier(0.33, 1, 0.68, 1);
+}
+
+/* ---- CTA Pulse: stopped, fixed border at 70% ---- */
+.menu-root.reduced-motion .cta-button.pulsing {
+    border-opacity: 0.7;
+}
+
+/* ---- CTA Entrance: no scale ---- */
+.menu-root.reduced-motion .cta-button.entrance-visible {
+    scale: 1.0;
+}
+
+/* ---- Background Breathing: stopped ---- */
+.menu-root.reduced-motion .menu-background.breathing {
+    opacity: 1.0;
+}
+
+/* ---- Dialog: simplified to opacity-only ---- */
+.menu-root.reduced-motion .dialog-panel.dialog-enter {
+    scale: 1.0;
+    transition: opacity 150ms cubic-bezier(0.33, 1, 0.68, 1);
+}
+
+.menu-root.reduced-motion .dialog-panel.dialog-exit {
+    scale: 1.0;
+    transition: opacity 100ms cubic-bezier(0.55, 0.085, 0.68, 0.53);
+}
+
+/* ---- Focus Indicator: preserved (core information) ---- */
+/* No override needed. */
+
+/* ---- Button Press: preserved (interaction feedback) ---- */
+/* No override needed. */
+
+/* ---- Screen Fade: preserved (state transition) ---- */
+/* No override needed. */
